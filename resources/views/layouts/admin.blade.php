@@ -52,7 +52,7 @@
               </div>
               <div class="pms-header-user pull-right">
                 <a href="javascript:void(0);">
-                  <img src="../images/tabs-2.jpg" alt="user" />
+                  <img src="{{ asset('/images/tabs-2.jpg') }}" alt="user" />
                   <div class="pms-header-user-info new-header-usename">
                     <label>{{ Auth::guard('admin')->user()->name }}</label>
                     <span>Web Designer</span>
@@ -87,7 +87,7 @@
                   <a class="nav-link" href="{{ route('leave.index')}}">Leave</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="Leave.html">Employees</a>
+                <a class="nav-link" href="{{ route('getemployees') }}">Employees</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="attendance.html">Attendance</a>

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Leave;
 use App\Models\Holidays;
 use App\Models\Project;
+use App\Models\User;
+
 class EmployeeController extends Controller
 {
     protected $records_per_page;
@@ -50,7 +52,50 @@ class EmployeeController extends Controller
     public function getAttendencePage()
     {
         $emp_id = Auth()->user()->id;
-        $attendence = Attendence::where('employee_id' , $emp_id)->paginate( $this->records_per_page );
+        $attendence = '';
+        //$attendence = Attendence::where('employee_id' , $emp_id)->paginate( $this->records_per_page );
         return view('user.attendence', compact( 'attendence'));
+    }
+    public function getProfilePage()
+    {
+        $emp_id = Auth()->user()->id;
+        $employee = User::where('id' , $emp_id)->get()->first();
+        return view('user.profile', compact( 'employee'));
+    }
+    public function updateProfile(Request $request, $id)
+    {
+        $employee = User::find($id);
+
+        $employee->date_of_join = !empty($request->date_of_join) ? date('Y-m-d', strtotime($request->date_of_join)) : $employee->date_of_join ;
+        $employee->phone = $request->phone;
+        $employee->birthdate =  date('Y-m-d', strtotime($request->birthdate));
+        $employee->address = $request->address;
+        $employee->gender = $request->gender;
+        $employee->nationality = $request->nationality;
+        $employee->religion = $request->religion;
+        $employee->marital_status = $request->marital_status;
+        $employee->emergency_contact_name = $request->emergency_contact_name;
+        $employee->emergency_contact_relationship = $request->emergency_contact_relationship;
+        $employee->emergency_contact_phone = $request->emergency_contact_phone;
+        $employee->bank_name = $request->bank_name;
+        $employee->bank_account_no = $request->bank_account_no;
+        $employee->IFSC_code = $request->IFSC_code;
+        $employee->PAN_no = $request->PAN_no;
+        if($request->hasFile('profile_image')){
+            $filenameWithExt = $request->profile_image->getClientOriginalName();
+            //Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->profile_image->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            // Upload Image
+            $path = $request->profile_image->storeAs('public/uploads',$fileNameToStore);
+            
+            Auth()->user()->update(['profile_image'=>$fileNameToStore]);
+        }
+        $employee->save();
+        session()->flash('msg', 'Profile details updated');
+        return back();
     }
 }

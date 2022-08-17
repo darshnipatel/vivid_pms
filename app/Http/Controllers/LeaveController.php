@@ -12,9 +12,15 @@ class LeaveController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    protected $records_per_page = '';
+
+    public function _construct()
+    {
+        $this->records_per_page = config('app.records_per_page');
+    }
     public function index()
     {
-        $leaves = Leave::paginate(3);
+        $leaves = Leave::paginate($this->records_per_page);
         $employees = User::all();
         return view('admin.leave',compact( 'leaves', 'employees'));
     }

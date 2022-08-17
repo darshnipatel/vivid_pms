@@ -14,9 +14,15 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    protected $records_per_page = '';
+
+    public function _construct()
+    {
+        $this->records_per_page = config('app.records_per_page');
+    }
     public function index()
     {
-        $projects = Project::paginate(3);
+        $projects = Project::paginate($this->records_per_page);
         $clients = Client::all();
         $employees = User::all();
         return view('admin.project',compact( 'projects' , 'clients', 'employees' ));

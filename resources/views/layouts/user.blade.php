@@ -51,7 +51,7 @@
                 </form>
               </div>
               <div class="pms-header-user pull-right">
-                <a href="profile.html">
+                <a href="{{ route('profile') }}">
                   <img src="{{asset('/images/tabs-2.jpg')}}" alt="user" />
                   <div class="pms-header-user-info new-header-usename">
                     <label>Sahil Patel</label>
@@ -76,16 +76,16 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav">
                 <li class="nav-item">
-                  <a class="nav-link active" href="Dashboard.html">Dashboard</a>
+                  <a class="nav-link active" href="{{ route('home') }}">Dashboard</a>
                 </li>                
                 <li class="nav-item">
-                  <a class="nav-link" href="Attendance-employee.html">Attendence</a>
+                  <a class="nav-link" href="{{ route('attendencepage') }}">Attendence</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="ProjectList.html">Project</a>
+                  <a class="nav-link" href="{{ route('projectpage') }}">Project</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="holidays.html">Holidays</a>
+                  <a class="nav-link" href="{{ route('holidayspage') }}">Holidays</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ route('addLeave') }}">Leave</a>
@@ -112,9 +112,5 @@
   </div>
 </footer>
 
-      <!-- defult js -->
-      <script type="text/javascript" src="../js/jquery-3.6.0.min.js"></script>
-      <!-- bootstrap js -->
-      <script type="text/javascript" src="../js/bootstrap.min.js"></script>
   </body>
 </html>

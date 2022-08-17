@@ -22,7 +22,7 @@ class User extends Authenticatable
         'lastname',
         'email',
         'password',
-        'company'
+        'company','job_post', 'phone' , 'date_of_join', 'birthdate', 'address', 'gender', 'nationality', 'religion','marital_status','emergency_contact_name', 'emergency_contact_relationship', 'emergency_contact_phone', 'bank_name', 'bank_account_no', 'IFSC_code', 'PAN_no' ,'profile_image'
     ];
 
     /**

@@ -17,8 +17,9 @@
         @foreach($employees as $employee)
         <div class="col-md-3">
             <a href="{{ route('employeedetail', $employee->id) }}">
-               <div class="defult-boxwrap employee-boxdiv">            
-                 <img src="../images/tabs-2.jpg" alt="employee" />
+               <div class="defult-boxwrap employee-boxdiv">  
+                <img id="preview_img" src="{{ env('APP_URL') }}/storage/app/public/uploads/{{ $employee->profile_image }}" alt="employee"/>              
+                
                  <h4>{{ $employee->firstname }}</h4>
                  <!-- <p>{{ $employee->designation }}</p> -->
                </div>

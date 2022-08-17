@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Project;
 
 class HomeController extends Controller
 {
@@ -11,8 +12,11 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    protected $records_per_page = '';
+
+    public function _construct()
     {
+        $this->records_per_page = config('app.records_per_page');
         $this->middleware('auth');
     }
 
@@ -23,6 +27,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('user.dashboard');
+        $user_id = Auth()->user()->id;
+        $projects = Project::where('employee_id', $user_id)->paginate($this->records_per_page);
+        
+        return view('user.dashboard', compact('projects'));
     }
 }
