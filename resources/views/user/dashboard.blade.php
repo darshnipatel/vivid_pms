@@ -32,11 +32,15 @@
                   <div class="punchtitle-date">
                      <h5>Punch In at</h5>
                      <label> {{ date('D, dS M Y') }} {{ $attendance->punch_in }}</label>
-                     
+                     <?php 
+                      $time1 = new DateTime(date('h:i:s', strtotime($attendance->created_at)));
+                      $time2 = new DateTime(date('h:i:s'));
+                      $time_diff = $time1->diff($time2);
+                     ?>
                   </div>
 
                   <div class="total-hour">
-                      <h4>3.45 hrs</h4>
+                      <h4> {{ $time_diff->h }}.{{ $time_diff->i }} hrs</h4>
                   </div>
 
                   <a href="javascript:void(0);" class="punchout-btn" onclick="event.preventDefault(); document.getElementById('punch-out-form').submit();">Punch Out</a>

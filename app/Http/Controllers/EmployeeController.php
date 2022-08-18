@@ -7,6 +7,7 @@ use App\Models\Leave;
 use App\Models\Holidays;
 use App\Models\Project;
 use App\Models\User;
+use App\Models\Attendance;
 use Illuminate\Support\Facades\Event;
 use App\Listeners\LoginSuccessful;
 use App\Listeners\LogoutSuccessful;
@@ -21,15 +22,16 @@ class EmployeeController extends Controller
     function punch_in(){
     // Get the user
         $user = Auth()->user();
-
-        // Create a blank event
-        $event = new Event;
-
-        // Add the user to the event
-        $event->user = $user;
+        $attendance = Attendance::where('user_id',$user->id)->where('day',date('Y-m-d'))->get()->first();
+        if(empty($attendance)){
+            // Create a blank event
+            $event = new Event;
+            // Add the user to the event
+            $event->user = $user;
+            // Run listener
+            (new LoginSuccessful)->handle($event);
+        }
         Session::put('punch_in', 'yes');
-        // Run listener
-        (new LoginSuccessful)->handle($event);
         return back();
     }
     function punch_out(){
