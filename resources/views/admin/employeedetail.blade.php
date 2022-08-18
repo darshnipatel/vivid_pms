@@ -8,7 +8,7 @@
              <div class="row">
                 <div class="col-md-12">
                    <div class="profile-view">
-                      <div class="profile-img-wrap">
+                      <div class="profile-img-wrap" >
                          <div class="profile-img">
                             <img id="preview_img" src="{{ env('APP_URL') }}/storage/app/public/uploads/{{ $employee->profile_image }}" alt="employee"/>              
                          </div>
@@ -125,41 +125,56 @@
             </div>
         </div>
     </div>
+</div>
       <div class="col-md-12 text-center mt-2">
-         <a id="download" href="#" class="btn btn-primary">Download CV</a>
-      </div>
-    </div>
-  </div>
- 
+         <a id="download" href="javascript:void(0)" class="btn btn-primary">Download CV</a>
+      </div>  
+</div>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
-
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 <script>
-   
-    $('#download').click(function () {
-        html2canvas($('#user_content'), {
+   var specialElementHandlers = {
+  '#bypassme': function(element, renderer) {
+    return true;
+   }
+};
 
-        onrendered: function (canvas) {
+var margin = {
+  top: 100,
+  left: 0,
+  right: 0,
+  bottom: 0
+};
 
-        var data = canvas.toDataURL();
+var tinymceToJSPDFHTML = document.createElement("body");
 
-        var docDefinition = {
+   $('#download').click(function () {
+      html2canvas($('#user_content'), {
 
-            content: [{
+onrendered: function (canvas) {
 
-                image: data,
+    var data = canvas.toDataURL();
 
-                width: 500
+    var docDefinition = {
 
-            }]
+        content: [{
 
-        };
+            image: data,
+
+            width: 500
+
+        }]
+
+    };
 
     pdfMake.createPdf(docDefinition).download("stockledger.pdf");
 
 }
 
 });
-    });
+
+
+   });
+ 
 </script>
 @endsection

@@ -54,7 +54,7 @@
                 <a href="{{ route('profile') }}">
                   <img src="{{asset('/images/tabs-2.jpg')}}" alt="user" />
                   <div class="pms-header-user-info new-header-usename">
-                    <label>Sahil Patel</label>
+                    <label>{{ Auth::user()->firstname }}</label>
                     <span>Web Designer</span>
                   </div>
                 </a>

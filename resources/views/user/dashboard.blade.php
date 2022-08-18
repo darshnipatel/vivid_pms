@@ -10,12 +10,11 @@
               <h2 class="new-header-breadheding">
                Dashboard 
               </h2>
-              <!-- nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-                </ol>
-              </nav -->
+             <!-- @if(session('login-success'))
+                  <div class="alert alert-success" role="alert">
+                      {{ session('login-success') }}
+                  </div>
+              @endif-->
             </div>
          </div>
       </div>
@@ -29,17 +28,22 @@
             <div class="wrap-fisrtcard">
               <h3 class="pms-cardtitle">Timesheet <span class="punch-date">( 11 Mar 2022 )</span></h3>
               <div class="wrap-punch">
+                @if($punch)
                   <div class="punchtitle-date">
                      <h5>Punch In at</h5>
-                     <label>Wed, 11th Mar 2022 10.00AM</label>
+                     <label> {{ date('D, dS M Y') }} {{ $attendance->punch_in }}</label>
+                     
                   </div>
 
                   <div class="total-hour">
                       <h4>3.45 hrs</h4>
                   </div>
 
-                  <a href="#" class="punchout-btn">Punch Out</a>
-
+                  <a href="javascript:void(0);" class="punchout-btn" onclick="event.preventDefault(); document.getElementById('punch-out-form').submit();">Punch Out</a>
+                    <form id="punch-out-form"  action="{{route('punchOut')}}"
+                            method="post">
+                            @csrf @method('POST')
+                    </form>
                   <div class="info-break-overtime">
                       <div class="breack-headingtime">
                           <h5>Break</h5>
@@ -50,6 +54,14 @@
                           <label>3 hrs</label>
                       </div>
                   </div>
+                  @else
+                  <a href="javascript:void(0);" class="punchout-btn" onclick="event.preventDefault(); document.getElementById('punch-in-form').submit();">Punch In</a>
+                        <form id="punch-in-form"  action="{{route('punchIn')}}"
+                            method="post">
+                            @csrf @method('POST')
+                        </form>
+                     </a>
+                  @endif
                 </div>
               </div>
           </div>
@@ -77,7 +89,7 @@
                      <label>LEAVE TAKEN</label>
                   </div>
                   <div class="pms-totaltask">
-                    <a href="#" class="leave-button">Apply Leave</a>
+                    <a href="{{ route('addLeave') }}" class="leave-button">Apply Leave</a>
                 </div>
               </div>                                
           </div>
@@ -145,53 +157,33 @@
 
         <div class="col-md-12">
           <div class="defult-boxwrap">
-              <table class="table">
+          <table class="table">
                   <thead>
                     <tr>
                       <th>PROJRCT NAME</th>
                       <th>TECHNOLOGY</th>
-                      <th>DEVLOPER</th>                    
                       <th>START DATE</th>
                       <th>END DATE</th>
                       <th>Priority</th>
                     </tr>
                   </thead>
                   <tbody>
+                  @if(!empty($projects))
+                  @foreach($projects as $project)
                     <tr>
-                      <td>Glofox</td>
-                      <td>Angular</td>
-                      <td>NIRAJ</td>
-                      <td>2022-04-01</td>
-                      <td>2022-05-01</td>
-                      <td>High</td>
+                      <td>{{ $project->project_name }}</td>
+                      <td>{{ $project->technology}}</td>
+                      <td>{{ ($project->start_date != '') ? date('d-m-Y', strtotime($project->start_date) ) : '' }}</td>
+                      <td>{{ ($project->end_date != '') ? date('d-m-Y', strtotime($project->end_date) ) : '' }}</td>
+                      <td>{{ $project->priority }}</td>
                     </tr>
-                    <tr>
-                      <td>Glofox</td>
-                      <td>Angular</td>
-                      <td>NIRAJ</td>
-                      <td>2022-04-01</td>
-                      <td>2022-05-01</td>
-                      <td>High</td>
-                    </tr>
-                    <tr>
-                      <td>Glofox</td>
-                      <td>Angular</td>
-                      <td>NIRAJ</td>
-                      <td>2022-04-01</td>
-                      <td>2022-05-01</td>
-                      <td>High</td>
-                    </tr>
+                  @endforeach
+                  @endif
                   </tbody>
-                </table>    
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                  </ul>
-                </nav> 
+                </table>   
+                @if(!empty($projects)) 
+                {{ $projects->links("pagination::bootstrap-4") }}
+                @endif
             </div>
         </div>
         

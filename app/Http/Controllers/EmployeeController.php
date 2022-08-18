@@ -7,15 +7,43 @@ use App\Models\Leave;
 use App\Models\Holidays;
 use App\Models\Project;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Event;
+use App\Listeners\LoginSuccessful;
+use App\Listeners\LogoutSuccessful;
+use Session;
 class EmployeeController extends Controller
 {
     protected $records_per_page;
     public function __construct(){
 
         $this->records_per_page = config('app.records_per_page');
-    }
+    } 
+    function punch_in(){
+    // Get the user
+        $user = Auth()->user();
 
+        // Create a blank event
+        $event = new Event;
+
+        // Add the user to the event
+        $event->user = $user;
+        Session::put('punch_in', 'yes');
+        // Run listener
+        (new LoginSuccessful)->handle($event);
+        return back();
+    }
+    function punch_out(){
+        // Get the user
+            $user = Auth()->user();
+            // Create a blank event
+            $event = new Event;
+            // Add the user to the event
+            $event->user = $user;
+            Session::put('punch_in', '');
+            // Run listener
+            (new LogoutSuccessful)->handle($event);
+            return back();
+    }
     public function getLeavePage()
     {
         $leaves = Leave::where('employee_id', Auth()->user()->id)->paginate( $this->records_per_page );

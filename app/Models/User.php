@@ -48,4 +48,32 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Project');
     }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    public function checkIn()
+    {
+        $now = $this->freshTimestamp();
+    
+        return $this->attendances()->create([
+            'user_id' => Auth()->user()->id,
+            'day' => $now->format('Y-m-d'),
+            'punch_in' => $now->format('H:i a')
+        ]);
+    }
+
+    public function checkOut()
+    {
+        $now = $this->freshTimestamp();
+        return $this->attendances()
+                    ->where('day', $now->format('Y-m-d'))
+                    ->whereNull('punch_out')
+                    ->firstOrFail()
+                    ->update([
+                        'punch_out' => $now->format('H:i: a'),
+                    ]);
+    }
 }

@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', function () {
-            return view('user.dashboard');
-    });
+    Route::get('/',[App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/leave', [App\Http\Controllers\EmployeeController::class, 'getLeavePage'])->name('addLeave');
     Route::post('/leave', [App\Http\Controllers\EmployeeController::class, 'addLeave'])->name('storeLeave');
@@ -25,7 +23,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/attendence', [App\Http\Controllers\EmployeeController::class, 'getAttendencePage'])->name('attendencepage');
     Route::get('/profile', [App\Http\Controllers\EmployeeController::class, 'getProfilePage'])->name('profile');
     Route::put('/profile/{id}', [App\Http\Controllers\EmployeeController::class, 'updateProfile'])->name('saveprofile');
-
+    Route::post('/punch-in', [App\Http\Controllers\EmployeeController::class, 'punch_in'])->name('punchIn');
+    Route::post('/punch-out', [App\Http\Controllers\EmployeeController::class, 'punch_out'])->name('punchOut');
 });
 Route::get('admin/login',[App\Http\Controllers\Auth\AdminAuthController::class, 'getLogin'])->name('adminLogin');
 Route::post('admin/login', [App\Http\Controllers\Auth\AdminAuthController::class, 'postLogin'])->name('adminLoginPost');
