@@ -1,6 +1,7 @@
 @extends('layouts.user')
 
 @section('content')
+@php(date_default_timezone_set("Asia/Kolkata"))
  <!-- page title -->
  <div class="container">
       <div class="row new-header-breadcrumbpading">
@@ -26,8 +27,9 @@
         <div class="col-md-5">
           <div class="defult-boxwrap">
             <div class="wrap-fisrtcard">
-              <h3 class="pms-cardtitle">Timesheet <span class="punch-date">( 11 Mar 2022 )</span></h3>
+              <h3 class="pms-cardtitle">Timesheet <span class="punch-date">( {{ date('d M Y') }} )</span></h3>
               <div class="wrap-punch">
+
                 @if($punch)
                   <div class="punchtitle-date">
                      <h5>Punch In at</h5>
@@ -36,6 +38,8 @@
                       $time1 = new DateTime(date('h:i:s', strtotime($attendance->created_at)));
                       $time2 = new DateTime(date('h:i:s'));
                       $time_diff = $time1->diff($time2);
+                      $working_hours = config('app.working_hours');
+                      $break_time = config('app.break_time');
                      ?>
                   </div>
 
@@ -51,11 +55,16 @@
                   <div class="info-break-overtime">
                       <div class="breack-headingtime">
                           <h5>Break</h5>
-                          <label>0:45 Min</label>
+                          <label>{{ $break_time }} Min</label>
                       </div>
                       <div class="breack-headingtime">
                           <h5>Overtime</h5>
-                          <label>3 hrs</label>
+                          @php($overtime = 0)
+
+                          @if($time_diff->h > $working_hours)
+                              @php($overtime = ($time_diff->h - $working_hours))
+                          @endif
+                          <label>{{ $overtime }} hrs</label>
                       </div>
                   </div>
                   @else
@@ -113,7 +122,9 @@
                                  </div>
                                  <div class="admin-info">
                                      <h4>Today Birthday</h4>
-                                     <p>Sahil Patel</p>
+                                     @foreach($today_birthday as $emp)
+                                     <p>{{ ucfirst($emp->firstname) }} {{ ucfirst($emp->lastname) }}</p>
+                                     @endforeach
                                  </div>
                              </a>
                          </li>
@@ -125,7 +136,9 @@
                                  </div>
                                  <div class="admin-info">
                                      <h4>Today Leave</h4>
-                                     <p>Hardik Patel</p>
+                                     @foreach($today_leave as $leave)
+                                     <p>{{ ucfirst($leave->employee->firstname) }} {{ ucfirst($leave->employee->lastname) }}</p>
+                                     @endforeach
                                  </div>
                              </a>
                          </li>
@@ -149,7 +162,9 @@
                                  </div>
                                  <div class="admin-info">
                                      <h4>UPCOMING HOLIDAY</h4>
-                                     <p>Diwali</p>
+                                     @foreach($upcoming_holiday as $holiday)
+                                     <p>{{ ucfirst($holiday->name) }}</p>
+                                     @endforeach
                                  </div>
                              </a>
                          </li>

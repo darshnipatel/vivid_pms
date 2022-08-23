@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Models\Leave;
 use App\Models\Holidays;
 use App\Models\Project;
@@ -82,8 +83,7 @@ class EmployeeController extends Controller
     public function getAttendencePage()
     {
         $emp_id = Auth()->user()->id;
-        $attendence = '';
-        //$attendence = Attendence::where('employee_id' , $emp_id)->paginate( $this->records_per_page );
+        $attendence = Attendance::where('user_id' , $emp_id)->paginate( $this->records_per_page );
         return view('user.attendence', compact( 'attendence'));
     }
     public function getProfilePage()

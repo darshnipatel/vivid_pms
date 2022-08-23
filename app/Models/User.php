@@ -56,24 +56,25 @@ class User extends Authenticatable
 
     public function checkIn()
     {
+        date_default_timezone_set("Asia/Kolkata");
         $now = $this->freshTimestamp();
-    
         return $this->attendances()->create([
             'user_id' => Auth()->user()->id,
             'day' => $now->format('Y-m-d'),
-            'punch_in' => $now->format('H:i a')
+            'punch_in' => $now->format('g:i a')
         ]);
     }
 
     public function checkOut()
     {
+        date_default_timezone_set("Asia/Kolkata");
         $now = $this->freshTimestamp();
         return $this->attendances()
                     ->where('day', $now->format('Y-m-d'))
                     ->whereNull('punch_out')
                     ->firstOrFail()
                     ->update([
-                        'punch_out' => $now->format('H:i: a'),
+                        'punch_out' => $now->format('g:i a'),
                     ]);
     }
 }

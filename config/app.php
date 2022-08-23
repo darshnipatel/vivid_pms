@@ -13,7 +13,13 @@ return [
     |
     */
 
+
     'records_per_page'=>10,
+    
+    'working_hours'=>8,
+
+    'break_time'=>0.45,
+
     'name' => env('APP_NAME', 'PMS'),
 
     /*

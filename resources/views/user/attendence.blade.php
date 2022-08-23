@@ -42,24 +42,39 @@
                 </tr>
               </thead>
               <tbody>
+                @php($i=1)
+                @foreach($attendence as $attend)
                 <tr>
-                  <td>1</td>
-                  <td>19 Feb 2019</td>
-                  <td>10 AM</td>
-                  <td>7 PM</td>
-                  <td>9 hrs</td>
-                  <td>0:45 Min</td>
-                  <td>0</td>
+                  <td> {{ $i++ }} </td>
+                  <td> {{ date('d M Y' , strtotime($attend->day)) }}</td>
+                  <td> {{ $attend->punch_in }}</td>
+                  <td> {{ $attend->punch_out }}</td>
+                  <td> 
+                    <?php 
+                    $total_hours = '';
+                    if($attend->punch_out){
+                      $datetime1 = new DateTime($attend->punch_in);
+                      $datetime2 = new DateTime($attend->punch_out);
+                      $interval = $datetime1->diff($datetime2);
+                      $total_hours = $interval->format('%hh %im');
+                    }
+                    ?>
+                    {{ $total_hours }}
+                  </td>
+                  <td>{{ config('app.break_time') }} Min</td>
+                  <td>
+                      <?php 
+                        $working_hours = config('app.working_hours');
+                        $overtime = 0;
+                        if($total_hours > $working_hours){
+                          $overtime = $working_hours - $total_hours;
+                        }
+                      ?>
+                    {{ $overtime }}
+                  </td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>20 Feb 2019</td>
-                  <td>10 AM</td>
-                  <td>7 PM</td>
-                  <td>9 hrs</td>
-                  <td>0:45 Min</td>
-                  <td>0</td>
-                </tr>
+                @endforeach
+              
               </tbody>
             </table>
               
