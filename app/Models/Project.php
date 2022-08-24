@@ -31,4 +31,8 @@ class Project extends Model
     {
         return $this->hasOne('App\Models\Client','id','client_id');
     }
+    public function project_summary()
+    {
+        return $this->hasMany('App\Models\ProjectSummary');
+    }
 }

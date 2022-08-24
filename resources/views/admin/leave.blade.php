@@ -124,7 +124,6 @@
             dataType: 'json',
             data:{leave_id: id,status:$(this).val(), _token:"{{ csrf_token() }}"},
             success: function (data) {
-              
             }
           });
         });

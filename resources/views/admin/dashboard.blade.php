@@ -26,7 +26,7 @@
 
         <div class="col-md-5">
           <div class="defult-boxwrap">
-            
+              
           </div>
         </div>
 
@@ -73,11 +73,13 @@
                          <li>
                              <a href="#">
                                  <div class="img-radius">
-                                  <img src="../images/birthday-cake.png" alt="Birthday" />
+                                  <img src="{{asset('/images/birthday-cake.png')}}" alt="Birthday" />
                                  </div>
                                  <div class="admin-info">
                                      <h4>Today Birthday</h4>
-                                     <p>Sahil Patel</p>
+                                     @foreach($today_birthday as $emp)
+                                     <p>{{ ucfirst($emp->firstname) }} {{ ucfirst($emp->lastname) }}</p>
+                                     @endforeach
                                  </div>
                              </a>
                          </li>
@@ -85,11 +87,13 @@
                          <li>
                              <a href="#">
                                  <div class="img-radius">
-                                  <img src="../images/exit-door-sign.png" alt="Leave" />
+                                  <img src="{{asset('/images/exit-door-sign.png')}}" alt="Leave" />
                                  </div>
                                  <div class="admin-info">
                                      <h4>Today Leave</h4>
-                                     <p>Hardik Patel</p>
+                                     @foreach($today_leave as $leave)
+                                     <p>{{ ucfirst($leave->employee->firstname) }} {{ ucfirst($leave->employee->lastname) }}</p>
+                                     @endforeach
                                  </div>
                              </a>
                          </li>
@@ -97,7 +101,7 @@
                          <li>
                              <a href="#">
                                  <div class="img-radius">
-                                  <img src="../images/seminar.png" alt="Seminar" />
+                                  <img src="{{asset('/images/seminar.png')}}" alt="Seminar" />
                                  </div>
                                  <div class="admin-info">
                                      <h4>Upcomming Seminar</h4>
@@ -109,11 +113,13 @@
                          <li>
                              <a href="#">
                                  <div class="img-radius">
-                                  <img src="../images/resort.png" alt="HOLIDAY" />
+                                  <img src="{{asset('/images/resort.png')}}" alt="HOLIDAY" />
                                  </div>
                                  <div class="admin-info">
                                      <h4>UPCOMING HOLIDAY</h4>
-                                     <p>Diwali</p>
+                                     @foreach($upcoming_holiday as $holiday)
+                                     <p>{{ ucfirst($holiday->name) }}</p>
+                                     @endforeach
                                  </div>
                              </a>
                          </li>
@@ -137,41 +143,19 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Glofox</td>
-                      <td>Angular</td>
-                      <td>NIRAJ</td>
-                      <td>2022-04-01</td>
-                      <td>2022-05-01</td>
-                      <td>High</td>
-                    </tr>
-                    <tr>
-                      <td>Glofox</td>
-                      <td>Angular</td>
-                      <td>NIRAJ</td>
-                      <td>2022-04-01</td>
-                      <td>2022-05-01</td>
-                      <td>High</td>
-                    </tr>
-                    <tr>
-                      <td>Glofox</td>
-                      <td>Angular</td>
-                      <td>NIRAJ</td>
-                      <td>2022-04-01</td>
-                      <td>2022-05-01</td>
-                      <td>High</td>
-                    </tr>
+                    @foreach($projects as $project)
+                      <tr>
+                        <td class="project_name">{{ $project->project_name }}</td>
+                        <td class="technology">{{ $project->technology }}</td>
+                        <td class="employee" >{{ $project->employee->firstname }}</td>
+                        <td class="start_date">{{ ($project->start_date != '') ? date('d-m-Y', strtotime($project->start_date) ) : '' }}</td>
+                        <td class="end_date" >{{ ($project->end_date != '') ? date('d-m-Y', strtotime($project->end_date) ) : '' }}</td>
+                        <td class="priority">{{ $project->priority }}</td>
+                      </tr>
+                    @endforeach
                   </tbody>
-                </table>    
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                  </ul>
-                </nav> 
+                </table> 
+                 {{ $projects->links("pagination::bootstrap-4") }}    
             </div>
         </div>
         

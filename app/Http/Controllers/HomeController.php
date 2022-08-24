@@ -23,6 +23,7 @@ class HomeController extends Controller
     public function _construct()
     {
         $this->middleware('auth');
+        $this->records_per_page = config('app.records_per_page');
     }
 
     /**
@@ -40,8 +41,6 @@ class HomeController extends Controller
                         ->get();
 
         $upcoming_holiday = Holidays::whereBetween('date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
-
-
         //$quries = DB::getQueryLog();
         //dd($quries);
       
@@ -53,7 +52,7 @@ class HomeController extends Controller
         {
             $attendance = Attendance::where('user_id',$user_id)->where('day',date('Y-m-d'))->get()->first();
         }
-        $this->records_per_page = config('app.records_per_page');
+        
       
         $projects = Project::where('employee_id', $user_id)->paginate($this->records_per_page);
       

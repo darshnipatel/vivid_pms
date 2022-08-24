@@ -6,7 +6,11 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Project;
+use App\Models\Holidays;
+use App\Models\Leave;
 use App\Models\Client;
+use Carbon\Carbon;
+use DB;
 class AdminController extends Controller
 {
     /**
@@ -26,7 +30,16 @@ class AdminController extends Controller
         $project_count = Project::count();
         $clients_count = Client::count();
         $projects = Project::paginate($this->records_per_page);
-        return view('admin.dashboard', compact( 'employees_count' ,'project_count', 'clients_count' ,'projects'));
+
+        $today_birthday = User::select('firstname', 'lastname')->where('birthdate', date('Y-m-d'))->get();
+        $today_leave    = Leave::whereDate('from_date', '<=', date("Y-m-d"))
+                        ->whereDate('to_date', '>=', date("Y-m-d"))
+                        ->where( 'status','Approved')
+                        ->get();
+
+        $upcoming_holiday = Holidays::whereBetween('date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
+
+        return view('admin.dashboard', compact( 'employees_count' ,'project_count', 'clients_count' ,'projects','today_birthday','today_leave','upcoming_holiday'));
     }
 
     public function get_employees()

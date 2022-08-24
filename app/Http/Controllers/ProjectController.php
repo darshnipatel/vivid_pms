@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Client;
 use App\Models\User;
+use App\Models\ProjectSummary;
 
 class ProjectController extends Controller
 {
@@ -60,22 +61,23 @@ class ProjectController extends Controller
         $input['end_date'] = date('Y-m-d h:i:s', strtotime($input['end_date'])) ;
         $files = $request->file('project_files');
         $upload_array = array();
-       
-        foreach($files as $file){
-                // Get filename with the extension
-                $filenameWithExt = $file->getClientOriginalName();
-                //Get just filename
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                // Get just ext
-                $extension = $file->getClientOriginalExtension();
-                // Filename to store
-                $fileNameToStore = $filename.'_'.time().'.'.$extension;
-                // Upload Image
-                $path = $file->storeAs('public/uploads',$fileNameToStore);
-                $upload_array[] = $fileNameToStore;
-                //Storage::delete('/public/uploads/'.$project->attached_files);
+        if($files){
+            foreach($files as $file){
+                    // Get filename with the extension
+                    $filenameWithExt = $file->getClientOriginalName();
+                    //Get just filename
+                    $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                    // Get just ext
+                    $extension = $file->getClientOriginalExtension();
+                    // Filename to store
+                    $fileNameToStore = $filename.'_'.time().'.'.$extension;
+                    // Upload Image
+                    $path = $file->storeAs('public/uploads',$fileNameToStore);
+                    $upload_array[] = $fileNameToStore;
+                    //Storage::delete('/public/uploads/'.$project->attached_files);
+            }
+            $input['attached_files']= implode(",",$upload_array);
         }
-        $input['attached_files']= implode(",",$upload_array);
         Project::create($input);
         
         session()->flash('msg', 'Project Created');
@@ -163,4 +165,36 @@ class ProjectController extends Controller
         session()->flash('msg', 'Project deleted');
         return back();
     }
+
+    public function add_project_summary(Request $request)
+    {
+         $this->validate($request, [
+            'details' => 'required',
+            'hours' => 'required',
+            'date' => 'required',
+        ]);
+        $input = $request->all();
+        ProjectSummary::create($input);
+        session()->flash('msg', 'Project Summary details added');
+        return back();
+    }
+    public function get_project_summary()
+    {
+        $project_summary = ProjectSummary::where('id',$_REQUEST['id'])->get();
+        ob_start();
+        foreach($project_summary as $summary){
+                ?>
+                 <li>
+                    <div class="view_entry">
+                   <p><strong>Date:</strong> <?php echo date('d M Y', strtotime($summary->date)) ?> </p>
+                   <p><strong>Hours:</strong> <?php echo $summary->hours ?> </p>
+                  </div>
+                   <p><strong>Description:</strong> <?php echo $summary->details ?> </p>
+                 </li>
+                <?php
+        }   
+        $content = ob_get_contents();
+        ob_end_clean();
+        return $content;
+    } 
 }

@@ -112,7 +112,6 @@
           <div class="defult-boxwrap hr-activities-wrap">
               <div class="wraper-hr">
                  <h3 class="pms-cardtitle">HR Activities</h3>
-
                  <div class="info-admindetails">
                      <ul class="aadmindetails-list">
                          <li>
