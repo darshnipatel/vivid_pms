@@ -99,8 +99,6 @@ class LeaveController extends Controller
         
        
         $leaves = Leave::where('employee_id',$_REQUEST['employee_id'])->whereBetween('from_date', [$from , $to ])->get();
-        
-
        $fileName = 'leaves.csv';
 
         $headers = array(
@@ -127,7 +125,6 @@ class LeaveController extends Controller
             }
             fclose($file);
         };
-
         return response()->stream($callback, 200, $headers);
     }
     /**

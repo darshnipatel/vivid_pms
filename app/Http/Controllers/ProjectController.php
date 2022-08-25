@@ -92,7 +92,10 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        //
+        $project = Project::find($id);
+
+        return view('admin.viewproject',compact( 'project'));
+
     }
 
     /**
@@ -180,7 +183,7 @@ class ProjectController extends Controller
     }
     public function get_project_summary()
     {
-        $project_summary = ProjectSummary::where('id',$_REQUEST['id'])->get();
+        $project_summary = ProjectSummary::where('project_id',$_REQUEST['id'])->get();
         ob_start();
         foreach($project_summary as $summary){
                 ?>
@@ -197,4 +200,32 @@ class ProjectController extends Controller
         ob_end_clean();
         return $content;
     } 
+    public function download_project_csv(Request $request, $id)
+    {
+        $project = Project::find($id)->get()->first();
+        $fileName = $project->project_name .'_report.csv';
+            $headers = array(
+                "Content-type"        => "text/csv",
+                "Content-Disposition" => "attachment; filename=$fileName",
+                "Pragma"              => "no-cache",
+                "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+                "Expires"             => "0"
+            );
+
+            $columns = array('Title', 'Assign', 'Description', 'Start Date', 'Due Date');
+
+            $callback = function() use($project, $columns) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, $columns);
+                foreach ($project->project_summary as $summary) {
+                    $row['Date']  = date('d-m-Y', strtotime($summary->date));
+                    $row['Details']    = $summary->details;
+                    $row['Hours']    = $summary->hours;
+                  
+                    fputcsv($file, array($row['Date'], $row['Details'], $row['Hours']));
+                }
+                fclose($file);
+            };
+            return response()->stream($callback, 200, $headers);
+    }
 }

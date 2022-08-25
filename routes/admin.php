@@ -23,10 +23,13 @@ Route::group(['middleware' => 'adminauth'], function () {
 	Route::get('/employees/{id}',[App\Http\Controllers\AdminController::class, 'get_employee_detail'])->name('employeedetail');
 	Route::resource('client', App\Http\Controllers\ClientController::class);
 	Route::resource('project', App\Http\Controllers\ProjectController::class);
+	
 	Route::resource('holidays', App\Http\Controllers\HolidaysController::class);
 	Route::resource('leave', App\Http\Controllers\LeaveController::class);
 	Route::post('/leave-status-update',[App\Http\Controllers\LeaveController::class, 'update_leave_status'])->name('update_leave_status');	
-	Route::post('/create-csv',[App\Http\Controllers\LeaveController::class, 'create_csv'])->name('create_csv');	
+	Route::post('/create-csv',[App\Http\Controllers\LeaveController::class, 'create_csv'])->name('create_csv');
+	Route::post('/download-project-details',[App\Http\Controllers\ProjectController::class, 'download_project_csv'])->name('download_project_details');	
+	
 	
 });
 

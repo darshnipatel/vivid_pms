@@ -148,33 +148,31 @@ var margin = {
 
 var tinymceToJSPDFHTML = document.createElement("body");
 
-   $('#download').click(function () {
+$('#download').click(function () {
       html2canvas($('#user_content'), {
 
-onrendered: function (canvas) {
+      onrendered: function (canvas) {
 
-    var data = canvas.toDataURL();
+         var data = canvas.toDataURL();
 
-    var docDefinition = {
+         var docDefinition = {
 
-        content: [{
+            content: [{
 
-            image: data,
+                  image: data,
 
-            width: 500
+                  width: 500
 
-        }]
+            }]
 
-    };
+         };
 
-    pdfMake.createPdf(docDefinition).download("stockledger.pdf");
+         pdfMake.createPdf(docDefinition).download("EmployeeCV.pdf");
 
-}
-
-});
-
+      }
 
    });
+});
  
 </script>
 @endsection
