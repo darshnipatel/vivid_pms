@@ -30,7 +30,7 @@
               <h3 class="pms-cardtitle">Timesheet <span class="punch-date">( {{ date('d M Y') }} )</span></h3>
               <div class="wrap-punch">
 
-                @if($punch)
+                @if($attendance)
                   <div class="punchtitle-date">
                      <h5>Punch In at</h5>
                      <label> {{ date('D, dS M Y') }} {{ $attendance->punch_in }}</label>

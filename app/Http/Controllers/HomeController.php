@@ -43,15 +43,9 @@ class HomeController extends Controller
         $upcoming_holiday = Holidays::whereBetween('date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
         //$quries = DB::getQueryLog();
         //dd($quries);
-      
         $user_id = Auth()->user()->id;
-        //Session::put('punch_in','');
         $punch = Session::get('punch_in');
-        $attendance = '';
-        if($punch)
-        {
-            $attendance = Attendance::where('user_id',$user_id)->where('day',date('Y-m-d'))->get()->first();
-        }
+        $attendance = Attendance::where('user_id',$user_id)->where('day',date('Y-m-d'))->get()->first();
         $projects = Project::where('employee_id', $user_id)->paginate($this->records_per_page);
         $panding_projects = Project::where('employee_id', $user_id)
                             ->where('status','In Progress')->count();
@@ -60,6 +54,6 @@ class HomeController extends Controller
         foreach($leaves as $leave){
             $leave_taken = $leave_taken + $leave->days;
         }
-        return view('user.dashboard', compact('projects' ,'punch' ,'attendance' ,'today_birthday' ,'today_leave' ,'upcoming_holiday' ,'panding_projects','leave_taken'));
+        return view('user.dashboard', compact('projects' ,'attendance' ,'today_birthday' ,'today_leave' ,'upcoming_holiday' ,'panding_projects','leave_taken'));
     }
 }
