@@ -9,6 +9,7 @@ use App\Models\Project;
 use App\Models\Holidays;
 use App\Models\Leave;
 use App\Models\Client;
+use App\Models\Attendance;
 use Carbon\Carbon;
 use DB;
 class AdminController extends Controller
@@ -29,6 +30,7 @@ class AdminController extends Controller
         $employees_count = User::count();
         $project_count = Project::count();
         $clients_count = Client::count();
+        $working_project_count = Project::where('status','In Progress')->count();
         $projects = Project::paginate($this->records_per_page);
 
         $today_birthday = User::select('firstname', 'lastname')->where('birthdate', date('Y-m-d'))->get();
@@ -39,7 +41,7 @@ class AdminController extends Controller
 
         $upcoming_holiday = Holidays::whereBetween('date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
 
-        return view('admin.dashboard', compact( 'employees_count' ,'project_count', 'clients_count' ,'projects','today_birthday','today_leave','upcoming_holiday'));
+        return view('admin.dashboard', compact( 'employees_count' ,'project_count', 'working_project_count','clients_count' ,'projects','today_birthday','today_leave','upcoming_holiday'));
     }
 
     public function get_employees()
@@ -49,9 +51,37 @@ class AdminController extends Controller
     }
     public function get_employee_detail($id)
     {
-        $employee = User::where('id', $id)->first();
-       
+        $employee = User::where('id', $id)->first();  
         return view('admin.employeedetail', compact( 'employee' ));
+    }
+    public function get_attendance_detail(Request $request)
+    {
+
+        if(isset($_REQUEST['employee']) && !empty($_REQUEST['employee']) )
+        {
+             
+           $attendance = Attendance::where('user_id',$_REQUEST['employee'])
+                        ->where('day', date('Y-m-d', strtotime($_REQUEST['attendance_date'])))
+                        ->get();             
+        }
+        else if(isset($_REQUEST['attendance_date']) && !empty($_REQUEST['attendance_date']) )
+        {
+            if($_REQUEST['employee']){
+                $attendance = Attendance::where('day', date('Y-m-d', strtotime($_REQUEST['attendance_date'])))
+                 ->where('user_id',$_REQUEST['employee'])
+                 ->get();      
+            }
+            else{
+            $attendance = Attendance::where('day', date('Y-m-d', strtotime($_REQUEST['attendance_date'])))
+                ->get();          
+            }
+        }
+        else
+        {
+           $attendance = Attendance::where('day', date('Y-m-d'))->get();  
+        }
+        $employees = User::all();
+        return view('admin.attendence', compact( 'attendance' ,'employees'));
     }
 }
 

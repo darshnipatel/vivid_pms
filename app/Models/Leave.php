@@ -17,7 +17,6 @@ class Leave extends Model
         'reason',
         'status'
     ];
-
      public function employee()
     {
         return $this->hasOne('App\Models\User','id','employee_id');

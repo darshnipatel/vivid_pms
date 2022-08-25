@@ -16,4 +16,8 @@ class Attendance extends Model
         'punch_in',
         'punch_out',
     ];
+    public function employee()
+    {
+        return $this->hasOne('App\Models\User','id','user_id');
+    }
 }

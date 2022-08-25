@@ -144,7 +144,7 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th>PROJRCT NAME</th>
+                    <th >NAME</th>
                     <th >TECHNOLOGY</th>
                     <th >DEVLOPER</th>
                     <th >CLIENT</th>
@@ -153,6 +153,7 @@
                     <th >Type</th>
                     <th >Priority</th>
                     <th >Rate</th>
+                    <th >Status</th>
                     <th >ACTION</th>
                   </tr>
                 </thead>
@@ -168,6 +169,13 @@
                     <td class="type">{{ $project->type }}</td>
                     <td class="priority">{{ $project->priority }}</td>
                     <td class="rate">{{ $project->rate }}</td>
+                    <td class="status">
+                      <select class="form-control project_status" name="project_status" data-id="{{ $project->id }}">
+                        <option value="Not Started" @if($project->status == "") selected @endif>Not Started</option>
+                        <option value="In Progress" @if($project->status == "In Progress") selected @endif>In Progress</option>
+                        <option value="Completed" @if($project->status == "Completed") selected @endif>Completed</option>
+                      </select>
+                    </td>
                     <td class="description" style="display: none;">{{ $project->description }}</td>
                     <td class="attached_files" style="display: none;" value="{{$project->attached_files }}">
                       @php
@@ -190,11 +198,11 @@
                         <img src="{{ asset('/images/pen.png')}}" alt="edit">
                       </button>
                       <a href="javascript:void(0);" title="delete" onclick="event.preventDefault(); document.getElementById('delete-project-{{$project->id}}').submit();"><img src="{{ asset('images/bin.png') }}" alt="delete"></a>
+                      <a href="{{ route('project.show',$project->id) }}" title="view"><img src="{{ asset('/images/view.png') }}" alt="view"></a>
                         <form id="delete-project-{{$project->id}}"  action="{{route('project.destroy', $project->id)}}"
                             method="post">
                             @csrf @method('DELETE')
                         </form>
-                      <a href="{{ route('project.show',$project->id) }}" title="view"><img src="{{ asset('/images/view.png') }}" alt="view"></a>
                     </td>
                   </tr>
                   @endforeach
@@ -371,5 +379,16 @@
        //$('input[name="project_files"]').val("");
        $('.edit-input-images').html('');
     });
+    $('.project_status').change(function(){
+          var id = $(this).data('id');
+          $.ajax({
+            url: '<?php echo url('/admin/project-status-update'); ?>',
+            type: 'POST',
+            dataType: 'json',
+            data:{project_id: id,status:$(this).val(), _token:"{{ csrf_token() }}"},
+            success: function (data) {
+            }
+          });
+        });
   </script>
 @endsection

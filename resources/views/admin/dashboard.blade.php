@@ -26,7 +26,6 @@
 
         <div class="col-md-5">
           <div class="defult-boxwrap">
-              
           </div>
         </div>
 
@@ -39,7 +38,7 @@
                      <label>Total Projects</label>
                   </div>
                   <div class="panding-task total-task">
-                     <h4>1</h4>
+                     <h4>{{ $working_project_count }}</h4>
                      <label>Working Projects</label>
                   </div>                  
               </div>

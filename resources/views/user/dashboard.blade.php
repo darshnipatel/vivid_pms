@@ -35,8 +35,8 @@
                      <h5>Punch In at</h5>
                      <label> {{ date('D, dS M Y') }} {{ $attendance->punch_in }}</label>
                      <?php 
-                      $time1 = new DateTime(date('h:i:s', strtotime($attendance->created_at)));
-                      $time2 = new DateTime(date('h:i:s'));
+                      $time1 = new DateTime(date('H:i:s', strtotime($attendance->created_at)));
+                      $time2 = new DateTime(date('H:i:s'));
                       $time_diff = $time1->diff($time2);
                       $working_hours = config('app.working_hours');
                       $break_time = config('app.break_time');
@@ -85,11 +85,11 @@
             <h3 class="pms-cardtitle">Projects</h3>
               <div class="wrap-titles">
                   <div class="total-task">
-                     <h4>2</h4>
+                     <h4>{{ $projects->count() }}</h4>
                      <label>Total Projects</label>
                   </div>
                   <div class="panding-task total-task">
-                     <h4>1</h4>
+                     <h4>{{ $panding_projects }}</h4>
                      <label>Panding Projects</label>
                   </div>
               </div>
@@ -98,7 +98,7 @@
             <h3 class="pms-cardtitle">Leave</h3>
                <div class="wrap-titles">
                   <div class="total-task">
-                     <h4>2</h4>
+                     <h4>{{ $leave_taken }}</h4>
                      <label>LEAVE TAKEN</label>
                   </div>
                   <div class="pms-totaltask">
@@ -183,6 +183,7 @@
                       <th>START DATE</th>
                       <th>END DATE</th>
                       <th>Priority</th>
+                      <th>Status</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -194,6 +195,7 @@
                       <td>{{ ($project->start_date != '') ? date('d-m-Y', strtotime($project->start_date) ) : '' }}</td>
                       <td>{{ ($project->end_date != '') ? date('d-m-Y', strtotime($project->end_date) ) : '' }}</td>
                       <td>{{ $project->priority }}</td>
+                      <td>{{ $project->status }}</td>
                     </tr>
                   @endforeach
                   @endif

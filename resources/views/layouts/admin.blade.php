@@ -90,7 +90,7 @@
                 <a class="nav-link" href="{{ route('getemployees') }}">Employees</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="attendance.html">Attendance</a>
+                  <a class="nav-link" href="{{ route('get_attendance_page') }}">Attendance</a>
                 </li> 
                 <li class="nav-item">
                   <a class="nav-link" href="{{ route('client.index') }}">Client</a>

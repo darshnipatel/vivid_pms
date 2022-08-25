@@ -55,7 +55,7 @@
                                     <br>
                                     <br>
                                     <div class="staff-id"><strong>Employee ID:</strong> VIVID-{{$employee->id}}</div>
-                                    <div class="staff-datejoin"><strong>Date of Join:</strong><input type="text" class="form-control datepicker" name="date_of_join" value="@if(isset($employee->date_of_join)){{ $employee->date_of_join }} @endif"> </div>                              
+                                    <div class="staff-datejoin"><strong>Date of Join:</strong><input type="text" class="form-control datepicker" name="date_of_join" value="@if(isset($employee->date_of_join)){{ date('d/m/Y',strtotime($employee->date_of_join)) }} @endif"> </div>                              
                                 </div>
                                 </div>
                                 <div class="col-md-7">
@@ -70,7 +70,7 @@
                                     </li>
                                     <li>
                                         <div class="title">Birthday:</div>
-                                        <div class="text"><input type="text" class="form-control datepicker" name="birthdate" value="@if(isset($employee->birthdate)){{ date('d-m-Y' , strtotime($employee->birthdate)) }} @endif"></div>
+                                        <div class="text"><input type="text" class="form-control datepicker" name="birthdate" value="@if(isset($employee->birthdate)){{ date('d/m/Y' , strtotime($employee->birthdate)) }} @endif"></div>
                                     </li>
                                     <li>
                                         <div class="title">Address:</div>

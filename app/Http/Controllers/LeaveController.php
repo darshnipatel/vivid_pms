@@ -96,35 +96,34 @@ class LeaveController extends Controller
     {
         $from = date('Y-m-d',strtotime($_REQUEST['from_date']));
         $to =  date('Y-m-d',strtotime($_REQUEST['to_date']));
-        
-       
-        $leaves = Leave::where('employee_id',$_REQUEST['employee_id'])->whereBetween('from_date', [$from , $to ])->get();
-       $fileName = 'leaves.csv';
-
-        $headers = array(
-            "Content-type"        => "text/csv",
-            "Content-Disposition" => "attachment; filename=$fileName",
-            "Pragma"              => "no-cache",
-            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
-            "Expires"             => "0"
-        );
+        $emp_name = User::select('firstname')->where('id', $_REQUEST['employee'])->get()->first();
+        $fileName = $emp_name->firstname . '_leaves.csv';
+        $leaves = Leave::where('employee_id',$_REQUEST['employee'])->whereBetween('from_date', [$from , $to ])->get();
 
         $columns = array('From Date', 'To Date', 'Leave Type', 'Reason', 'Status');
 
         $callback = function() use($leaves, $columns) {
             $file = fopen('php://output', 'w');
             fputcsv($file, $columns);
-
             foreach ($leaves as $leave) {
-                $row['FromDate']  = $leave->from_date;
-                $row['ToDate']    = $leave->to_date;
+                
+                $row['FromDate']  = date('d-m-Y', strtotime($leave->from_date));
+                $row['ToDate']    = date('d-m-Y', strtotime($leave->to_date));
                 $row['LeaveType']    = $leave->leave_type;
                 $row['Reason']  = $leave->reason;
                 $row['Status']  = $leave->status;
                 fputcsv($file, array($row['FromDate'], $row['ToDate'], $row['LeaveType'], $row['Reason'], $row['Status']));
+                
             }
             fclose($file);
         };
+         $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
         return response()->stream($callback, 200, $headers);
     }
     /**

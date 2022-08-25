@@ -12,7 +12,7 @@
             {{ $project->project_name }}
             </h2>
             <a  href="javascipt:void(0)" id="download" class="btn btn-primary" data-id="{{ $project->id }}"  style="margin: 0;" onclick="event.preventDefault(); document.getElementById('download_form').submit();">Download CSV</a>
-            <form method="post" id="download_form" action="{{ route('download_project_details', $project->id) }}">
+            <form method="post" id="download_form" action="{{ route('download_project_details',$project->id)}}">
               @csrf
             </form>
             <!-- nav aria-label="breadcrumb">

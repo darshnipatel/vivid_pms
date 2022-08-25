@@ -52,10 +52,14 @@ class HomeController extends Controller
         {
             $attendance = Attendance::where('user_id',$user_id)->where('day',date('Y-m-d'))->get()->first();
         }
-        
-      
         $projects = Project::where('employee_id', $user_id)->paginate($this->records_per_page);
-      
-        return view('user.dashboard', compact('projects' ,'punch' ,'attendance' ,'today_birthday' ,'today_leave' ,'upcoming_holiday'));
+        $panding_projects = Project::where('employee_id', $user_id)
+                            ->where('status','In Progress')->count();
+        $leaves = Leave::select( DB::raw("DATEDIFF(from_date,to_date) AS days"))->where('employee_id', $user_id)->get();
+        $leave_taken = 0;
+        foreach($leaves as $leave){
+            $leave_taken = $leave_taken + $leave->days;
+        }
+        return view('user.dashboard', compact('projects' ,'punch' ,'attendance' ,'today_birthday' ,'today_leave' ,'upcoming_holiday' ,'panding_projects','leave_taken'));
     }
 }

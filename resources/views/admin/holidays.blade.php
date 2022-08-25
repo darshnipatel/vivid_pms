@@ -40,7 +40,7 @@
                   </div>
                   <div class="form-group">
                     <label>Date</label>
-                    <input name="date" type="text" class="form-control datepicker" placeholder="mm/dd/yyyy"  autocomplete="off"/>
+                    <input name="date" type="text" class="form-control datepicker" placeholder="dd-mm-yyyy"  autocomplete="off"/>
                   </div>
                   <div class="form-group">
                         <label>Type</label>

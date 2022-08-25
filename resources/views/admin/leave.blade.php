@@ -29,19 +29,21 @@
           <div class="defult-boxwrap">
               <h2 class="defult-boxtitle">Leave Management</h2>
               <div class="Leave_select">
+                <form method="post" action="{{ route('create_csv') }}">
+                  @csrf
                 <div class="Leave_select_wrapper">
                   <div class="Leave_select_data">
                     <div class="form-group">
                       <label>From date:</label>
-                      <input id="from_date" name="from_date" type="date" placeholder="mm/dd/yyyy" class="form-control" />
+                      <input id="from_date" name="from_date" type="text" placeholder="dd-mm-yyyy" class="form-control datepicker" autocomplete="off" />
                     </div>
                     <div class="form-group">
                       <label>To date:</label>
-                      <input id="to_date" name="to_date" type="date" placeholder="mm/dd/yyyy" class="form-control" />
+                      <input id="to_date" name="to_date" type="text" placeholder="dd-mm-yyyy" class="form-control datepicker" autocomplete="off" />
                     </div>
                     <div class="form-group">
                       <label>User:</label>
-                      <select id="employee" class="form-control">
+                      <select id="employee" name="employee" class="form-control">
                       <option value="Select User name">Select User name</option>
                         @foreach($employees as $employee)
                         <option value="{{ $employee->id }}">{{ $employee->firstname }}</option>
@@ -53,6 +55,7 @@
                     <input type="submit" id="create_csv" value="Create CSV">
                   </div>
                 </div>
+              </form>
               </div>
             </div>
             <div class="defult-boxwrap">
@@ -64,7 +67,7 @@
                     <th>Employee</th>
                     <th>Leave Type</th>
                     <th>Reason</th>
-                    <th>Count</th>
+                    <th>Days</th>
                     <th>Status</th>
                   </tr>
                 </thead>
@@ -80,9 +83,9 @@
                             $from_date = new DateTime($leave->from_date);
                             $to_date = new DateTime($leave->to_date);
                             $diff = date_diff( $from_date , $to_date);
-                            $days = $diff->format('%d days');
+                            $days = $diff->format('%d');
                         @endphp
-                        {{ $days }}
+                        {{ ($days + 1) }}
                     </td>
                     <td>
                       <select class="form-control leave_status" >
@@ -102,20 +105,7 @@
       </div>
     </div>
     <script>
-       $('#create_csv').click(function(){
-          var from_date = $('#from_date').val();
-          var to_date = $('#to_date').val();
-          var employee_id = $('#employee').val();
-          $.ajax({
-            url: '<?php echo url('/admin/create-csv'); ?>',
-            type: 'POST',
-            dataType: 'json',
-            data:{from_date: from_date,to_date:to_date, employee_id: employee_id, _token:"{{ csrf_token() }}"},
-            success: function (data) {
-              alert(1);
-            }
-          });
-       });
+    
         $('.leave_status').change(function(){
           var id = $(this).closest('tr').data('id')
           $.ajax({

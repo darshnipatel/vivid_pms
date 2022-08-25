@@ -200,7 +200,7 @@ class ProjectController extends Controller
         ob_end_clean();
         return $content;
     } 
-    public function download_project_csv(Request $request, $id)
+    public function download_project_csv($id)
     {
         $project = Project::find($id)->get()->first();
         $fileName = $project->project_name .'_report.csv';
@@ -212,7 +212,7 @@ class ProjectController extends Controller
                 "Expires"             => "0"
             );
 
-            $columns = array('Title', 'Assign', 'Description', 'Start Date', 'Due Date');
+            $columns = array('Date', 'Details', 'Hours');
 
             $callback = function() use($project, $columns) {
                 $file = fopen('php://output', 'w');
@@ -221,11 +221,18 @@ class ProjectController extends Controller
                     $row['Date']  = date('d-m-Y', strtotime($summary->date));
                     $row['Details']    = $summary->details;
                     $row['Hours']    = $summary->hours;
-                  
                     fputcsv($file, array($row['Date'], $row['Details'], $row['Hours']));
                 }
                 fclose($file);
             };
             return response()->stream($callback, 200, $headers);
+    }
+    public function update_project_status()
+    {
+            $project = Project::find($_REQUEST['project_id']);
+            $project->status = $_REQUEST['status'];
+            $project->save();
+            session()->flash('msg', 'Project Status updated');
+            return back();
     }
 }

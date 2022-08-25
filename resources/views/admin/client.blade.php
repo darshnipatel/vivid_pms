@@ -85,7 +85,6 @@
          </div>
       </div>
       <div class="row">
-     
         @foreach($clients as $client)
           <div class="col-md-3">
             <div class="defult-boxwrap employee-boxdiv">   
