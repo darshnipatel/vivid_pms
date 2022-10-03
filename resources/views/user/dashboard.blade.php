@@ -149,7 +149,7 @@
                                  </div>
                                  <div class="admin-info">
                                      <h4>Upcomming Seminar</h4>
-                                     <p>Sonali Patel</p>
+                                     <p>-</p>
                                  </div>
                              </a>
                          </li>
@@ -198,6 +198,12 @@
                       <td>{{ $project->status }}</td>
                     </tr>
                   @endforeach
+                  @else
+                    <tr>
+                        <td colspan="5" align="center">
+                            <h3 class="nodata-found">No Data Found</h3>
+                        </td>
+                    </tr>
                   @endif
                   </tbody>
                 </table>   

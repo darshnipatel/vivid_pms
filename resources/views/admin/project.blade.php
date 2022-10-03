@@ -40,7 +40,7 @@
                 </ul>
             </div>
         @endif
-        <form method="post" action="{{ route('project.store') }}" enctype="multipart/form-data">
+        <form method="post" id="addProject-form" action="{{ route('project.store') }}" enctype="multipart/form-data">
           <div class="defult-boxwrap">
                 @csrf
                 <!-- project name start-->
@@ -53,6 +53,7 @@
                   <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                     <div class="form-group">
                       <select name="client_id" class="pms-client-name form-control">
+                        <option>Select client Name</option>
                         @foreach($clients as $client)
                           <option value="{{ $client->id }}" >{{ $client->name }}</option>
                         @endforeach
@@ -117,10 +118,12 @@
                     <label>Select Technology</label>
                     <select name="technology" class="pms-client-name form-control">
                       <option value="">Select Technology</option>
-                      <option value="Python">Python</option>
+                      <option value="Wordpress">Wordpress</option>
                       <option value="PHP">PHP</option>
-                      <option value="Java">Java</option>
-                      <option value="Ruby">Ruby</option>
+                      <option value="Laravel">Laravel</option>
+                      <option value="HTMLCSSJS">HTML/CSS/JS</option>
+                      <option value="UIUXDesign">UI/UX Design</option>
+                      <option value="Shopify">Shopify</option>
                     </select>
                   </div>
                 </div>
@@ -135,7 +138,7 @@
                   </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                  <button type="submit" class="btn">Create</button>
+                  <button type="submit" class="btn btn-submit">Create</button>
                 </div>
               </div>
         </form>
@@ -158,54 +161,62 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach($projects as $project)
-                  <tr>
-                    <td class="project_name">{{ $project->project_name }}</td>
-                    <td class="technology">{{ $project->technology }}</td>
-                    <td class="employee" >{{ $project->employee->firstname }}</td>
-                    <td class="client">{{ $project->client->name }}</td>
-                    <td class="start_date">{{ ($project->start_date != '') ? date('d-m-Y', strtotime($project->start_date) ) : '' }}</td>
-                    <td class="end_date" >{{ ($project->end_date != '') ? date('d-m-Y', strtotime($project->end_date) ) : '' }}</td>
-                    <td class="type">{{ $project->type }}</td>
-                    <td class="priority">{{ $project->priority }}</td>
-                    <td class="rate">{{ $project->rate }}</td>
-                    <td class="status">
-                      <select class="form-control project_status" name="project_status" data-id="{{ $project->id }}">
-                        <option value="Not Started" @if($project->status == "") selected @endif>Not Started</option>
-                        <option value="In Progress" @if($project->status == "In Progress") selected @endif>In Progress</option>
-                        <option value="Completed" @if($project->status == "Completed") selected @endif>Completed</option>
-                      </select>
-                    </td>
-                    <td class="description" style="display: none;">{{ $project->description }}</td>
-                    <td class="attached_files" style="display: none;" value="{{$project->attached_files }}">
-                      @php
-                        $files = explode(',',$project->attached_files);
-                        if(!empty($project->attached_files))
-                        {
-                          foreach($files as $file)
+                  @if($projects->isNotEmpty())
+                    @foreach($projects as $project)
+                    <tr>
+                      <td class="project_name">{{ $project->project_name }}</td>
+                      <td class="technology">{{ $project->technology }}</td>
+                      <td class="employee" >{{ $project->employee->firstname }}</td>
+                      <td class="client">{{ $project->client->name }}</td>
+                      <td class="start_date">{{ ($project->start_date != '') ? date('d-m-Y', strtotime($project->start_date) ) : '' }}</td>
+                      <td class="end_date" >{{ ($project->end_date != '') ? date('d-m-Y', strtotime($project->end_date) ) : '' }}</td>
+                      <td class="type">{{ $project->type }}</td>
+                      <td class="priority">{{ $project->priority }}</td>
+                      <td class="rate">{{ $project->rate }}</td>
+                      <td class="status">
+                        <select class="form-control project_status" name="project_status" data-id="{{ $project->id }}">
+                          <option value="Not Started" @if($project->status == "") selected @endif>Not Started</option>
+                          <option value="In Progress" @if($project->status == "In Progress") selected @endif>In Progress</option>
+                          <option value="Completed" @if($project->status == "Completed") selected @endif>Completed</option>
+                        </select>
+                      </td>
+                      <td class="description" style="display: none;">{{ $project->description }}</td>
+                      <td class="attached_files" style="display: none;" value="{{$project->attached_files }}">
+                        @php
+                          $files = explode(',',$project->attached_files);
+                          if(!empty($project->attached_files))
                           {
-                            @endphp
-                              <div style="display: inline">
-                                  <img style="max-width: 20%;" class="img-thumbnail" src="{{  env('APP_URL') }}/storage/app/public/uploads/{{ $file }}" />
-                              </div>
-                            @php
+                            foreach($files as $file)
+                            {
+                              @endphp
+                                <div style="display: inline">
+                                    <img style="max-width: 20%;" class="img-thumbnail" src="{{  env('APP_URL') }}/storage/app/public/uploads/{{ $file }}" />
+                                </div>
+                              @php
+                            }
                           }
-                        }
-                      @endphp
-                    </td>
-                    <td>
-                      <button type="button" class="project_edit" title="edit" data-bs-toggle="modal" data-bs-target="#projectedit" data-href= "{{route('project.update',$project->id)}}">
-                        <img src="{{ asset('/images/pen.png')}}" alt="edit">
-                      </button>
-                      <a href="javascript:void(0);" title="delete" onclick="event.preventDefault(); document.getElementById('delete-project-{{$project->id}}').submit();"><img src="{{ asset('images/bin.png') }}" alt="delete"></a>
-                      <a href="{{ route('project.show',$project->id) }}" title="view"><img src="{{ asset('/images/view.png') }}" alt="view"></a>
-                        <form id="delete-project-{{$project->id}}"  action="{{route('project.destroy', $project->id)}}"
-                            method="post">
-                            @csrf @method('DELETE')
-                        </form>
-                    </td>
-                  </tr>
-                  @endforeach
+                        @endphp
+                      </td>
+                      <td>
+                        <button type="button" class="project_edit" title="edit" data-bs-toggle="modal" data-bs-target="#projectedit" data-href= "{{route('project.update',$project->id)}}">
+                          <img src="{{ asset('/images/pen.png')}}" alt="edit">
+                        </button>
+                        <a href="javascript:void(0);" title="delete" onclick="event.preventDefault(); document.getElementById('delete-project-{{$project->id}}').submit();"><img src="{{ asset('images/bin.png') }}" alt="delete"></a>
+                        <a href="{{ route('project.show',$project->id) }}" title="view"><img src="{{ asset('/images/view.png') }}" alt="view"></a>
+                          <form id="delete-project-{{$project->id}}"  action="{{route('project.destroy', $project->id)}}"
+                              method="post">
+                              @csrf @method('DELETE')
+                          </form>
+                      </td>
+                    </tr>
+                    @endforeach
+                  @else
+                    <tr>
+                        <td colspan="11" align="center">
+                            <h3 class="nodata-found">No Data Found</h3>
+                        </td>
+                    </tr>
+                  @endif
                 </tbody>
               </table>    
               {{ $projects->links("pagination::bootstrap-4") }}    
@@ -297,11 +308,13 @@
             <div class="form-group">
               <label>Select Technology</label>
               <select name="technology" class="pms-client-name form-control">
-                <option value="">Select Technology</option>
-                <option value="Python">Python</option>
-                <option value="PHP">PHP</option>
-                <option value="Java">Java</option>
-                <option value="Ruby">Ruby</option>
+                  <option value="">Select Technology</option>
+                  <option value="Wordpress">Wordpress</option>
+                  <option value="PHP">PHP</option>
+                  <option value="Laravel">Laravel</option>
+                  <option value="HTMLCSSJS">HTML/CSS/JS</option>
+                  <option value="UIUXDesign">UI/UX Design</option>
+                  <option value="Shopify">Shopify</option>
               </select>
             </div>
           </div>
@@ -327,6 +340,9 @@
 </div>
 </div>
 <script>
+    $("#addProject-form").on('submit',function(){
+       jQuery('.btn-submit').attr('disabled', 'disabled');
+    });
     $('.input-images').imageUploader({
       imagesInputName:'project_files',
       preloadedInputName:'preloaded',

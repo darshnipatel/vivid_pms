@@ -42,7 +42,7 @@
                         </ul>
                     </div>
                 @endif
-                <form class="from" method="post" name="pms-login-form" action="{{ route('storeLeave') }}">
+                <form class="from" method="post" name="pms-login-form" id="addleave-form" action="{{ route('storeLeave') }}">
                     @csrf
                   <div class="row">
                     <div class="col-md-6">
@@ -55,7 +55,7 @@
                       <div class="form-group">
                         <label>Type of Leave</label>
                         <select name="leave_type" class="form-control">
-                          <option>Select Leave Type</option>
+                          <option value=0>Select Leave Type</option>
                           <option value="casual">Casual Leave</option>
                           <option value="medical" >Medical Leave</option>
                         </select>
@@ -64,13 +64,13 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Start Date</label>
-                        <input name="from_date" type="text" class="form-control datepicker">
+                        <input name="from_date" type="text" class="form-control datepicker" autocomplete="off">
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>End Date</label>
-                        <input name="to_date" type="text" class="form-control datepicker"/>
+                        <input name="to_date" type="text" class="form-control datepicker" autocomplete="off" />
                       </div>
                     </div>
                   </div>
@@ -78,7 +78,7 @@
                     <label>Reason</label>
                     <textarea name="reason" class="form-control"></textarea>
                   </div>
-                  <button type="submit" class="btn">Submit</button>
+                  <button type="submit" class="btn btn-submit">Submit</button>
                 </form>
               </div>
               <!-- Leave form end  -->
@@ -97,7 +97,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                   @foreach($leaves as $leave)
+                  @if($leaves->isNotEmpty())
+
+                    @foreach($leaves as $leave)
                     @php
                         $type = ($leave->leave_type == "casual") ? "Casual Leave" : "Medical Leave";
                     @endphp
@@ -125,8 +127,15 @@
                           @endif
                         <span class="badge {{ $class }}"> {{ $leave->status }}</span>
                         </td>
+                      </tr>
+                   @endforeach
+                  @else
+                    <tr>
+                        <td colspan="5" align="center">
+                            <h3 class="nodata-found">No Data Found</h3>
+                        </td>
                     </tr>
-                  @endforeach
+                  @endif
                 </tbody>
               </table>
               {{ $leaves->links("pagination::bootstrap-4") }}    
@@ -134,4 +143,10 @@
         </div>            
       </div>
     </div>
+    <script>
+      $("#addleave-form").on('submit',function(){
+        jQuery('.btn-submit').attr('disabled', 'disabled');
+      });
+    </script>
+
 @endsection

@@ -30,8 +30,18 @@
     </div> 
 
     <div class="form-group">
-      <label>Company Name </label>
-      <input id="company" type="text" class="form-control @error('company') is-invalid @enderror" name="company" value="{{ old('firstname') }}" required autocomplete="company" autofocus>
+      <label>Select Position </label>
+        <select aria-label="Position Applying for" type="text" name="postion_apply_for" class="form-control">
+        <option value="">Select Position</option>
+        <option value="ReactJS Developer">ReactJS Developer</option>
+        <option value="WordPress Developer">WordPress Developer</option>
+        <option value="PHP Developer">PHP Developer</option>
+        <option value="Laravel Developer">Laravel Developer</option>
+        <option value="Web Designer">Web Designer</option>
+        <option value="Shopify Developer">Shopify Developer</option>
+        <option value="Freshar">Freshar</option>
+        <option value="Intern">Intern</option>
+      </select>
     </div>
 
       

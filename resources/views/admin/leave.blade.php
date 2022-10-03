@@ -29,7 +29,7 @@
           <div class="defult-boxwrap">
               <h2 class="defult-boxtitle">Leave Management</h2>
               <div class="Leave_select">
-                <form method="post" action="{{ route('create_csv') }}">
+                <form method="post" action="{{ route('create_csv') }}" id="leave-report-form">
                   @csrf
                 <div class="Leave_select_wrapper">
                   <div class="Leave_select_data">
@@ -52,7 +52,7 @@
                     </div>
                   </div>
                   <div class="Leave_select_btn">
-                    <input type="submit" id="create_csv" value="Create CSV">
+                    <input type="submit" class="btn-submit" id="create_csv" value="Create CSV">
                   </div>
                 </div>
               </form>
@@ -72,31 +72,39 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach($leaves as $leave)
-                  <tr data-id="{{ $leave->id }}">
-                    <td>{{ date('d-m-Y', strtotime($leave->from_date))}} to {{ date('d-m-Y', strtotime($leave->to_date))}}</td>
-                    <td >{{ $leave->employee->firstname}}</td>
-                    <td>{{ $leave->leave_type }}</td>
-                    <td>{{ $leave->reason }}</td>
-                    <td>
-                        @php
-                            $from_date = new DateTime($leave->from_date);
-                            $to_date = new DateTime($leave->to_date);
-                            $diff = date_diff( $from_date , $to_date);
-                            $days = $diff->format('%d');
-                        @endphp
-                        {{ ($days + 1) }}
-                    </td>
-                    <td>
-                      <select class="form-control leave_status" >
-                        <option value="Select Status" >Select Status</option>
-                        <option value="Pending" @if ($leave->status == "Pending") {{ "selected"}} @endif >Pending</option>
-                        <option value="Canceled" @if ($leave->status == "Canceled") {{ "selected"}} @endif >Canceled</option>
-                        <option value="Approved" @if ($leave->status == "Approved") {{ "selected"}} @endif >Approved</option>
-                      </select>
-                    </td>
-                  </tr>
-                  @endforeach
+                  @if($leaves->isNotEmpty())
+                    @foreach($leaves as $leave)
+                    <tr data-id="{{ $leave->id }}">
+                      <td>{{ date('d-m-Y', strtotime($leave->from_date))}} to {{ date('d-m-Y', strtotime($leave->to_date))}}</td>
+                      <td >{{ $leave->employee->firstname}}</td>
+                      <td>{{ $leave->leave_type }}</td>
+                      <td>{{ $leave->reason }}</td>
+                      <td>
+                          @php
+                              $from_date = new DateTime($leave->from_date);
+                              $to_date = new DateTime($leave->to_date);
+                              $diff = date_diff( $from_date , $to_date);
+                              $days = $diff->format('%d');
+                          @endphp
+                          {{ ($days + 1) }}
+                      </td>
+                      <td>
+                        <select class="form-control leave_status" >
+                          <option value="Select Status" >Select Status</option>
+                          <option value="Pending" @if ($leave->status == "Pending") {{ "selected"}} @endif >Pending</option>
+                          <option value="Canceled" @if ($leave->status == "Canceled") {{ "selected"}} @endif >Canceled</option>
+                          <option value="Approved" @if ($leave->status == "Approved") {{ "selected"}} @endif >Approved</option>
+                        </select>
+                      </td>
+                    </tr>
+                    @endforeach
+                  @else
+                      <tr>
+                        <td colspan="6" align="center">
+                            <h3 class="nodata-found">No Data Found</h3>
+                        </td>
+                    </tr>
+                  @endif
                 </tbody>
               </table>
               {{ $leaves->links("pagination::bootstrap-4") }}    
@@ -105,7 +113,23 @@
       </div>
     </div>
     <script>
-    
+         $("#leave-report-form").on('submit',function(){
+           jQuery('.btn-submit').attr('disabled', 'disabled');
+         });
+         $('#create_csv').click(function(){
+          var from_date = $('#from_date').val();
+          var to_date = $('#to_date').val();
+          var employee_id = $('#employee').val();
+          $.ajax({
+            url: '<?php echo url('/admin/create-csv'); ?>',
+            type: 'POST',
+            dataType: 'json',
+            data:{from_date: from_date,to_date:to_date, employee_id: employee_id, _token:"{{ csrf_token() }}"},
+            success: function (data) {
+              //alert(1);
+            }
+          });
+       });
         $('.leave_status').change(function(){
           var id = $(this).closest('tr').data('id')
           $.ajax({

@@ -55,6 +55,7 @@ class EmployeeController extends Controller
     public function addLeave(Request $request)
     {
         $this->validate($request, [
+            'leave_type' => 'required',
             'from_date' => 'required',
             'to_date' => 'required',
             'reason' => 'required',

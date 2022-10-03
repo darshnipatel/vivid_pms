@@ -31,7 +31,7 @@
                   </ul>
               </div>
             @endif
-              <form name="pms-holiday-form-admin" method="post" action="{{ route('holidays.store')}}">
+              <form name="pms-holiday-form-admin" id="addHoliday-form" method="post" action="{{ route('holidays.store')}}">
               @csrf
                 <div class="form-group-wrapper">
                   <div class="form-group">
@@ -44,20 +44,24 @@
                   </div>
                   <div class="form-group">
                         <label>Type</label>
-                        <input type="radio"  name="type" value="full"> Full Day
-                        <input type="radio"  name="type" value="half"> Half Day
+                                             <div class="radiobox-div">
+                              <input type="radio" id="FullDay"  name="type" value="full"> 
+                              <label for="FullDay">Full Day</label>                             
+                        </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div class="radiobox-div">
+                              <input type="radio" id="HalfDay"  name="type" value="half">
+                              <label for="HalfDay">Half Day</label>                             
+                        </div>         
                   </div>
                 </div>
-                <button type="submit" class="btn">
+                <button type="submit" class="btn btn-submit">
                   Submit
                 </button>
               </form>
             </div>
-
           </div>
-          
             <div class="defult-boxwrap">
-
               <!-- Table -->
               <div class="table-responsive">
                 <table class="table">
@@ -72,37 +76,45 @@
                     </tr>
                   </thead>
                   <tbody>
+                    @if($holidays->isNotEmpty())
                     @php($i=1)
-                    @foreach($holidays as $holiday)
-                    <?php 
-                    if($holiday->status == "Active")
-                        $class = "bg-success";
-                    else if($holiday->status == "Pending")
-                        $class = "bg-warning";
-                    else if($holiday->status == "Cancel")
-                        $class = "bg-danger";
-                    ?>
-                    <tr>
-                      <td>{{ $i++ }}</td>
-                      <td class="date">{{ date('d-m-Y', strtotime($holiday->date)) }}</td>
-                      <td class="name" >{{ $holiday->name }}</td>
-                      <td class="type">{{ $holiday->type }}</td>
-                      <td>                     
-                        <span class="status badge {{ $class }}">{{ $holiday->status }}</span>
+                      @foreach($holidays as $holiday)
+                      <?php 
+                      if($holiday->status == "Active")
+                          $class = "bg-success";
+                      else if($holiday->status == "Pending")
+                          $class = "bg-warning";
+                      else if($holiday->status == "Cancel")
+                          $class = "bg-danger";
+                      ?>
+                      <tr>
+                        <td>{{ $i++ }}</td>
+                        <td class="date">{{ date('d-m-Y', strtotime($holiday->date)) }}</td>
+                        <td class="name" >{{ $holiday->name }}</td>
+                        <td class="type">{{ $holiday->type }}</td>
+                        <td>                     
+                          <span class="status badge {{ $class }}">{{ $holiday->status }}</span>
+                        </td>
+                        <td>
+                        <button type="button" class="holiday_edit" title="edit" data-bs-toggle="modal" data-bs-target="#editholiday" data-href= "{{route('holidays.update',$holiday->id)}}">
+                          <img src="{{ asset('/images/pen.png')}}" alt="edit">
+                        </button>
+                        <a href="javascript:void(0);" title="delete" onclick="event.preventDefault(); document.getElementById('delete-holiday-{{$holiday->id}}').submit();"><img src="{{ asset('images/bin.png') }}" alt="delete"></a>
+                          <form id="delete-holiday-{{$holiday->id}}"  action="{{route('holidays.destroy', $holiday->id)}}"
+                              method="post">
+                              @csrf @method('DELETE')
+                          </form>
+                       </a>
                       </td>
-                      <td>
-                      <button type="button" class="holiday_edit" title="edit" data-bs-toggle="modal" data-bs-target="#editholiday" data-href= "{{route('holidays.update',$holiday->id)}}">
-                        <img src="{{ asset('/images/pen.png')}}" alt="edit">
-                      </button>
-                      <a href="javascript:void(0);" title="delete" onclick="event.preventDefault(); document.getElementById('delete-holiday-{{$holiday->id}}').submit();"><img src="{{ asset('images/bin.png') }}" alt="delete"></a>
-                        <form id="delete-holiday-{{$holiday->id}}"  action="{{route('holidays.destroy', $holiday->id)}}"
-                            method="post">
-                            @csrf @method('DELETE')
-                        </form>
-                     </a>
-                    </td>
-                    </tr>
-                    @endforeach
+                      </tr>
+                      @endforeach
+                    @else
+                       <tr>
+                          <td colspan="6" align="center">
+                              <h3 class="nodata-found">No Data Found</h3>
+                          </td>
+                      </tr>
+                    @endif
                   </tbody>
                 </table>
             </div>
@@ -139,15 +151,33 @@
                   <div class="col-md-12">
                      <div class="form-group">
                        <label>Type</label>
-                        <input type="radio"  name="type" value="full">Full Day
-                        <input type="radio"  name="type" value="half">Half Day
+                        <div class="radiobox-div">
+                              <input type="radio" id="FullDay"  name="type" value="full"> 
+                              <label for="FullDay">Full Day</label>                             
+                        </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div class="radiobox-div">
+                              <input type="radio" id="HalfDay"  name="type" value="half">
+                              <label for="HalfDay">Half Day</label>                             
+                        </div> 
                      </div>
                   </div>
                     <div class="form-group">
                        <label>Status</label>   
-                       <input type="radio"  name="status" value="Active"> Active
-                       <input type="radio"  name="status" value="Pending"> Pending
-                       <input type="radio"  name="status" value="Cancel"> Cancel
+                       <div class="radiobox-div">
+                              <input type="radio" id="Active"  name="status" value="Active"> 
+                              <label for="Active">Active</label>                             
+                        </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div class="radiobox-div">
+                              <input type="radio" id="Pending" name="status" value="Pending"> 
+                              <label for="Pending">Pending</label>                             
+                        </div>
+                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div class="radiobox-div">
+                              <input type="radio" id="Cancel" name="status" value="Cancel"> 
+                              <label for="Cancel">Cancel</label>                             
+                        </div> 
                     </div>
             </div>
             <div class="submit-section">
@@ -159,6 +189,9 @@
   </div>
 </div>
 <script>
+    $("#addHoliday-form").on('submit',function(){
+        jQuery('.btn-submit').attr('disabled', 'disabled');
+    });
     $(".holiday_edit").on('click',function(){
          // $("#customerModal").modal('show');
         var action = $(this).data('href');  

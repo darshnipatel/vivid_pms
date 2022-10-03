@@ -1,3 +1,4 @@
+
 @extends('layouts.admin')
 
 @section('content')
@@ -37,7 +38,7 @@
                     </ul>
                 </div>
             @endif
-              <form name="" method="post" action=" {{ route('client.store') }}">
+              <form name="" id="addClient-form" method="post" action=" {{ route('client.store') }}">
                 @csrf
                <div class="row">
                   <div class="col-md-4">
@@ -74,7 +75,7 @@
                      </div>
                   </div>
                </div>
-                <button type="submit" class="btn">
+                <button type="submit" class="btn btn-submit">
                   Submit
                 </button>
   
@@ -143,6 +144,9 @@
   </div>
 </div>
 <script>
+    $("#addClient-form").on('submit',function(){
+        jQuery('.btn-submit').attr('disabled', 'disabled');
+    });
     $(".edit-clientpen").on('click',function(){
          // $("#customerModal").modal('show');
           var action = $(this).data('href');  

@@ -70,7 +70,7 @@
                  <div class="info-admindetails">
                      <ul class="aadmindetails-list">
                          <li>
-                             <a href="#">
+                           
                                  <div class="img-radius">
                                   <img src="{{asset('/images/birthday-cake.png')}}" alt="Birthday" />
                                  </div>
@@ -80,11 +80,11 @@
                                      <p>{{ ucfirst($emp->firstname) }} {{ ucfirst($emp->lastname) }}</p>
                                      @endforeach
                                  </div>
-                             </a>
+
                          </li>
 
                          <li>
-                             <a href="#">
+                             
                                  <div class="img-radius">
                                   <img src="{{asset('/images/exit-door-sign.png')}}" alt="Leave" />
                                  </div>
@@ -94,23 +94,23 @@
                                      <p>{{ ucfirst($leave->employee->firstname) }} {{ ucfirst($leave->employee->lastname) }}</p>
                                      @endforeach
                                  </div>
-                             </a>
+                           
                          </li>
 
                          <li>
-                             <a href="#">
+
                                  <div class="img-radius">
                                   <img src="{{asset('/images/seminar.png')}}" alt="Seminar" />
                                  </div>
                                  <div class="admin-info">
                                      <h4>Upcomming Seminar</h4>
-                                     <p>Sonali Patel</p>
+                                     <p>-</p>
                                  </div>
-                             </a>
+                           
                          </li>
 
                          <li>
-                             <a href="#">
+                            
                                  <div class="img-radius">
                                   <img src="{{asset('/images/resort.png')}}" alt="HOLIDAY" />
                                  </div>
@@ -120,7 +120,7 @@
                                      <p>{{ ucfirst($holiday->name) }}</p>
                                      @endforeach
                                  </div>
-                             </a>
+
                          </li>
                      </ul>
                  </div>
@@ -142,22 +142,30 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($projects as $project)
+                    @if($projects->isNotEmpty())
+                      @foreach($projects as $project)
+                        <tr>
+                          <td class="project_name">{{ $project->project_name }}</td>
+                          <td class="technology">{{ $project->technology }}</td>
+                          <td class="employee" >{{ $project->employee->firstname }}</td>
+                          <td class="start_date">{{ ($project->start_date != '') ? date('d-m-Y', strtotime($project->start_date) ) : '' }}</td>
+                          <td class="end_date" >{{ ($project->end_date != '') ? date('d-m-Y', strtotime($project->end_date) ) : '' }}</td>
+                          <td class="priority">{{ $project->priority }}</td>
+                        </tr>
+                      @endforeach
+                    @else
                       <tr>
-                        <td class="project_name">{{ $project->project_name }}</td>
-                        <td class="technology">{{ $project->technology }}</td>
-                        <td class="employee" >{{ $project->employee->firstname }}</td>
-                        <td class="start_date">{{ ($project->start_date != '') ? date('d-m-Y', strtotime($project->start_date) ) : '' }}</td>
-                        <td class="end_date" >{{ ($project->end_date != '') ? date('d-m-Y', strtotime($project->end_date) ) : '' }}</td>
-                        <td class="priority">{{ $project->priority }}</td>
+                          <td colspan="6" align="center">
+                              <h3 class="nodata-found">No Data Found</h3>
+                          </td>
                       </tr>
-                    @endforeach
+                    @endif
+                   
                   </tbody>
                 </table> 
                  {{ $projects->links("pagination::bootstrap-4") }}    
             </div>
         </div>
-        
       </div>
     </div>
 
