@@ -130,10 +130,10 @@ class ProjectController extends Controller
         $project->description = $request->description;
 
         $files = $request->file('edit_project_files');
-        
+      
         $upload_array = array();
         if($files){
-
+          
             foreach($files as $file){
                     // Get filename with the extension
                     $filenameWithExt = $file->getClientOriginalName();

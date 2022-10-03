@@ -33,6 +33,7 @@
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div class="defult-boxwrap">
+             @if(!$project->project_summary->isEmpty())
               <ul class="projectliast-desc">
                 @foreach($project->project_summary as $summary)
                  <li>
@@ -45,6 +46,9 @@
                  </li>
                  @endforeach
                </ul>
+              @else
+                  No Details Found
+              @endif
                 
           </div>
         </div>            

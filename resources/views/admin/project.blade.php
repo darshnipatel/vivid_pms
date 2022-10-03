@@ -61,12 +61,12 @@
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                     <div class="form-group">                    
-                      <input type="text" name="start_date" placeholder="Start Date" class="form-control datepicker"/>
+                      <input type="text" name="start_date" placeholder="Start Date" class="form-control datepicker" autocomplete="off" />
                     </div>
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                     <div class="form-group">
-                      <input type="text" name="end_date" placeholder="End Date" class="form-control datepicker"/>
+                      <input type="text" name="end_date" placeholder="End Date" class="form-control datepicker" autocomplete="off" />
                     </div>
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
@@ -220,7 +220,7 @@
         <h5 class="modal-title" id="exampleModalLabel">Project Daily Update</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form method="post" class="modalform" action=" {{ route('client.update' , 1 ) }}">
+      <form method="post" class="modalform" enctype="multipart/form-data" action=" {{ route('client.update' , 1 ) }}">
         @csrf
         @method('PUT')   
       <div class="modal-body">

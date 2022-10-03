@@ -51,7 +51,15 @@
                     <td>{{ date('d-m-Y', strtotime($project->start_date)) }}</td>
                     <td>{{ date('d-m-Y', strtotime($project->end_date)) }}</td>
                     <td>{{ $project->priority }}</td>
-                    <td>10:05</td>
+                    <td>
+                      @php 
+                      $total_hours = 0;
+                      foreach($project->project_summary as $summary){
+                        $total_hours = number_format($total_hours + (float)$summary->hours , 2);
+                      }
+                      @endphp
+                      {{ $total_hours }}
+                    </td>
                     <td>
                       <button type="button" class="edit_project" title="edit" data-bs-toggle="modal" data-bs-target="#projectedit" data-id= "{{ $project->id }}"  data-projectname="{{ $project->project_name }}">
                         <img src="{{ asset('/images/pen.png') }}" alt="edit">
@@ -88,7 +96,7 @@
         </div>
         <div class="form-group">
           <label>Date:</label>
-          <input type="date" name="date" placeholder="dd/mm/yyyy" class="form-control" />
+          <input type="text" name="date" placeholder="dd-mm-yyyy" class="form-control datepicker" autocomplete="off" />
         </div>
         <div class="form-group">
           <label>Hours:</label>

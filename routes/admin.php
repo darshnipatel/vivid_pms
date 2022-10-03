@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-
 Route::group(['middleware' => 'adminauth'], function () {
 	// Admin Dashboard
 	Route::get('/',[App\Http\Controllers\AdminController::class, 'dashboard'])->name('admindashboard');	

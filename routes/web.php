@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/punch-in', [App\Http\Controllers\EmployeeController::class, 'punch_in'])->name('punchIn');
     Route::post('/punch-out', [App\Http\Controllers\EmployeeController::class, 'punch_out'])->name('punchOut');
     Route::post('/project-summary', [App\Http\Controllers\ProjectController::class, 'add_project_summary'])->name('addprojectsummary');
-     Route::get('/get-project-summary', [App\Http\Controllers\ProjectController::class, 'get_project_summary'])->name('getprojectsummary');
+    Route::get('/get-project-summary', [App\Http\Controllers\ProjectController::class, 'get_project_summary'])->name('getprojectsummary');
     
 });
 Route::get('admin/login',[App\Http\Controllers\Auth\AdminAuthController::class, 'getLogin'])->name('adminLogin');

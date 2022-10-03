@@ -23,6 +23,7 @@
     <script src="{{asset('/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{asset('/js/custom-js.js')}}"></script>
     <script src="{{asset('/js/image-uploader.min.js')}}"></script>
+    
 </head>
   <body>
 

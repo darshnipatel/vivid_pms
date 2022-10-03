@@ -34,7 +34,7 @@
 
             <div class="col-md-2">
               <div class="pms-header-logo">
-                <a href="index.html">
+                <a href="{{ route('home') }}">
                   <img src="{{asset('/images/Logo.svg')}}" alt="Vivid Web Solution" />
                 </a>
               </div>
@@ -52,7 +52,7 @@
               </div>
               <div class="pms-header-user pull-right">
                 <a href="{{ route('profile') }}">
-                  <img src="{{asset('/images/tabs-2.jpg')}}" alt="user" />
+                  <img src="{{ env('APP_URL') }}/storage/app/public/uploads/{{ Auth::user()->profile_image }}" alt="user" />
                   <div class="pms-header-user-info new-header-usename">
                     <label>{{ Auth::user()->firstname }}</label>
                     <span>Web Designer</span>
