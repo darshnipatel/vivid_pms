@@ -99,12 +99,8 @@
                         <button type="button" class="holiday_edit" title="edit" data-bs-toggle="modal" data-bs-target="#editholiday" data-href= "{{route('holidays.update',$holiday->id)}}">
                           <img src="{{ asset('/images/pen.png')}}" alt="edit">
                         </button>
-                        <a href="javascript:void(0);" title="delete" onclick="event.preventDefault(); document.getElementById('delete-holiday-{{$holiday->id}}').submit();"><img src="{{ asset('images/bin.png') }}" alt="delete"></a>
-                          <form id="delete-holiday-{{$holiday->id}}"  action="{{route('holidays.destroy', $holiday->id)}}"
-                              method="post">
-                              @csrf @method('DELETE')
-                          </form>
-                       </a>
+                        <a href="javascript:void(0);" title="delete" class="delete_holiday" title="delete" data-bs-toggle="modal" data-bs-target="#holidaydelete" data-href= "{{route('holidays.destroy', $holiday->id)}}"><img src="{{ asset('images/bin.png') }}" alt="delete">
+                        </a>
                       </td>
                       </tr>
                       @endforeach
@@ -188,7 +184,40 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade bd-example-modal-lg" id="holidaydelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Holiday</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form id="delete-holiday"  action=""
+                              method="post">
+             @csrf @method('DELETE')
+             <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    Are you sure want to delete this?
+                  </div>
+                </div>
+            </div>
+            <div  class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Delete</button>
+            </div>
+            </form>
+        </div>
+    </div>
+  </div>
+</div>
+
 <script>
+    $('.delete_holiday').click(function() {
+      var action = $(this).data('href'); 
+      $('#delete-holiday').attr('action',action); 
+    })
     $("#addHoliday-form").on('submit',function(){
         jQuery('.btn-submit').attr('disabled', 'disabled');
     });

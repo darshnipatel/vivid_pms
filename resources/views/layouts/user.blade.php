@@ -42,7 +42,7 @@
 
             <div class="col-md-2">
               <div class="logout_div">
-                <a href="{{ route('logout') }}" class="logout_btn"  onclick="event.preventDefault();
+                <a href="javascript:void(0)" class="logout_btn"  onclick="event.preventDefault();
                                   document.getElementById('logout-form').submit();">
                   <img src="{{asset('/images/switch.png')}}" alt="logout">
                 </a>
@@ -55,16 +55,14 @@
                   <img src="{{ env('APP_URL') }}/storage/app/public/uploads/{{ Auth::user()->profile_image }}" alt="user" />
                   <div class="pms-header-user-info new-header-usename">
                     <label>{{ Auth::user()->firstname }}</label>
-                    <span>Web Designer</span>
+                    <span>{{ Auth::user()->job_post }}</span>
                   </div>
                 </a>
               </div>
             </div>
-            
           </div>
         </div>
       </div>
-
       <div class="custom_nav">
         <div class="container">
           <nav class="navbar navbar-expand-lg navbar-light">

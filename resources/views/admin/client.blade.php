@@ -91,7 +91,7 @@
             <div class="defult-boxwrap employee-boxdiv">   
                 <button type="button" class="edit-clientpen" title="edit" data-bs-toggle="modal" data-bs-target="#editclient" data-href= "{{route('client.update',$client->id)}}" data-skype="{{ $client->skype_id }}" data-name="{{ $client->name }}" data-country="{{ $client->country }}">
                     <img src="{{ asset('/images/pen.png') }}" alt="edit">
-                  </button>         
+                </button>         
                 <img src="{{ asset('/images/tabs-2.jpg') }}" alt="employee" />
                 <h4><a class="client_name" href="javascript:void(0);">{{ $client->name }}</a></h4>
                 <p class="country_name">{{ $client->country }}</p>

@@ -49,6 +49,7 @@ class EmployeeController extends Controller
     }
     public function getLeavePage()
     {
+    
         $leaves = Leave::where('employee_id', Auth()->user()->id)->paginate( $this->records_per_page );
         return view('user.addleave', compact( 'leaves'));
     }

@@ -5,10 +5,11 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -22,7 +23,7 @@ class User extends Authenticatable
         'lastname',
         'email',
         'password',
-        'company','job_post', 'phone' , 'date_of_join', 'birthdate', 'address', 'gender', 'nationality', 'religion','marital_status','emergency_contact_name', 'emergency_contact_relationship', 'emergency_contact_phone', 'bank_name', 'bank_account_no', 'IFSC_code', 'PAN_no' ,'profile_image'
+        'company','job_post', 'phone' , 'date_of_join', 'birthdate', 'address', 'gender', 'nationality', 'religion','marital_status','emergency_contact_name', 'emergency_contact_relationship', 'emergency_contact_phone', 'bank_name', 'bank_account_no', 'IFSC_code', 'PAN_no' ,'profile_image' ,'accepts'
     ];
 
     /**

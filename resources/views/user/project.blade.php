@@ -55,10 +55,20 @@
                       @php 
                       $total_hours = 0;
                       foreach($project->project_summary as $summary){
-                        $total_hours = number_format($total_hours + (float)$summary->hours , 2);
+                        //$summary->hours = str_replace(":",".",$summary->hours);
+                        //$total_hours = number_format($total_hours + (float)$summary->hours , 2);
+                          $times[] = $summary->hours;
+                      }
+                      $i = 0;
+                      foreach ($times as $time) {
+                          sscanf($time, '%d:%d', $hour, $min);
+                          $i += $hour * 60 + $min;
+                      }
+                      if($h = floor($i / 60)) {
+                            $i %= 60;
                       }
                       @endphp
-                      {{ $total_hours }}
+                      {{ $h }}: {{$i }}
                     </td>
                     <td>
                       <button type="button" class="edit_project" title="edit" data-bs-toggle="modal" data-bs-target="#projectedit" data-id= "{{ $project->id }}"  data-projectname="{{ $project->project_name }}">

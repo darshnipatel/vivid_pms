@@ -12,8 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth' ,'verified'] ], function () {
     Route::get('/',[App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/leave', [App\Http\Controllers\EmployeeController::class, 'getLeavePage'])->name('addLeave');
@@ -32,7 +31,6 @@ Route::group(['middleware' => 'auth'], function () {
 Route::get('admin/login',[App\Http\Controllers\Auth\AdminAuthController::class, 'getLogin'])->name('adminLogin');
 Route::post('admin/login', [App\Http\Controllers\Auth\AdminAuthController::class, 'postLogin'])->name('adminLoginPost');
 Route::get('admin/logout', [App\Http\Controllers\Auth\AdminAuthController::class, 'logout'])->name('adminLogout');
-
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 

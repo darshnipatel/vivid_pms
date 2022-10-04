@@ -54,7 +54,7 @@
                                 <div class="col-md-5">
                                 <div class="profile-info-left">
                                     <h3 class="user-name">{{ $employee->firstname }}</h3>
-                                    <small>Web Designer</small>
+                                    <small>{{ $employee->job_post }}</small>
                                     <br>
                                     <br>
                                     <div class="staff-id"><strong>Employee ID:</strong> VIVID-{{$employee->id}}</div>
@@ -146,7 +146,7 @@
             </div>
             <div class="col-md-12">
                 <div class="defult-boxwrap">
-                      <button type="button" class="editprofile-empen" title="edit" data-bs-toggle="modal" data-bs-target="#editbankinfo-profile">
+                      <button type="button" class="editprofile-empen" title="edit" data-bs-toggle="modal" data-bs-target="#editbankinfo -profile">
                    <img src="{{ asset('/images/pen.png')}}" alt="edit">
                  </button>
                     <h3 class="card-title">Bank information</h3>

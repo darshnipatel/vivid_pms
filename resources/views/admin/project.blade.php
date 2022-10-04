@@ -201,12 +201,10 @@
                         <button type="button" class="project_edit" title="edit" data-bs-toggle="modal" data-bs-target="#projectedit" data-href= "{{route('project.update',$project->id)}}">
                           <img src="{{ asset('/images/pen.png')}}" alt="edit">
                         </button>
-                        <a href="javascript:void(0);" title="delete" onclick="event.preventDefault(); document.getElementById('delete-project-{{$project->id}}').submit();"><img src="{{ asset('images/bin.png') }}" alt="delete"></a>
+                        <a href="javascript:void(0);" class="delete_project" title="delete" data-bs-toggle="modal" data-bs-target="#projectdelete" data-href= "{{route('project.destroy',$project->id)}}"
+                          ><img src="{{ asset('images/bin.png') }}" alt="delete"></a>
                         <a href="{{ route('project.show',$project->id) }}" title="view"><img src="{{ asset('/images/view.png') }}" alt="view"></a>
-                          <form id="delete-project-{{$project->id}}"  action="{{route('project.destroy', $project->id)}}"
-                              method="post">
-                              @csrf @method('DELETE')
-                          </form>
+                         
                       </td>
                     </tr>
                     @endforeach
@@ -224,7 +222,7 @@
         </div>            
       </div>
     </div>
-    <div class="modal fade bd-example-modal-lg" id="projectedit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" id="projectedit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -234,7 +232,7 @@
       <form method="post" class="modalform" enctype="multipart/form-data" action=" {{ route('client.update' , 1 ) }}">
         @csrf
         @method('PUT')   
-      <div class="modal-body">
+        <div class="modal-body">
       
           <div class="form-group">
             <label>Project Name*</label>
@@ -335,11 +333,42 @@
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary">Submit</button>
         </div>
-    </form>
+     </form>
+   </div>
   </div>
 </div>
+<div class="modal fade bd-example-modal-lg" id="projectdelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Project</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form id="delete-project"  action=""
+                              method="post">
+             @csrf @method('DELETE')
+             <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    Are you sure want to delete this?
+                  </div>
+                </div>
+            </div>
+            <div  class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Delete</button>
+            </div>
+            </form>
+        </div>
+    </div>
+  </div>
 </div>
 <script>
+    jQuery('.delete_project').click(function() {
+      var action = $(this).data('href'); 
+      $('#delete-project').attr('action',action); 
+    })
     $("#addProject-form").on('submit',function(){
        jQuery('.btn-submit').attr('disabled', 'disabled');
     });
@@ -405,6 +434,6 @@
             success: function (data) {
             }
           });
-        });
+    });
   </script>
 @endsection

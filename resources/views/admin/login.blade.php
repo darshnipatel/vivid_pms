@@ -51,14 +51,7 @@
       Submit
     </button>
 
-    <!-- dont-hve-act start -->
-    <div class="dont-hve-act text-center">
-      <p class="">
-        Don't have an account ?
-        <a href="{{ route('register') }}">Register</a>
-      </p>
-    </div>
-    <!-- dont-hve-act end  -->
+    
 
   </form>
 </div>

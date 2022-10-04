@@ -90,7 +90,7 @@
                   </div>
                   <div class="panding-task total-task">
                      <h4>{{ $panding_projects }}</h4>
-                     <label>Panding Projects</label>
+                     <label>Pending Projects</label>
                   </div>
               </div>
           </div>
@@ -187,7 +187,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                  @if(!empty($projects))
+                  @if($projects->isNotEmpty())
                   @foreach($projects as $project)
                     <tr>
                       <td>{{ $project->project_name }}</td>
@@ -200,7 +200,7 @@
                   @endforeach
                   @else
                     <tr>
-                        <td colspan="5" align="center">
+                        <td colspan="6" align="center">
                             <h3 class="nodata-found">No Data Found</h3>
                         </td>
                     </tr>

@@ -177,6 +177,7 @@ class ProjectController extends Controller
             'date' => 'required',
         ]);
         $input = $request->all();
+        $input['date'] = date('Y-m-d', strtotime($input['date']));
         ProjectSummary::create($input);
         session()->flash('msg', 'Project Summary details added');
         return back();

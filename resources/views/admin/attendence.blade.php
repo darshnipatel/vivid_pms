@@ -85,4 +85,315 @@
         </div>
       </div>
     </div>
+
+     <div class="defult-boxwrap">
+            <table class="table table-hover table-sm mb-0">
+<thead>
+<tr>
+<th class="border-top-0">Employee</th>
+<th class="border-top-0">1</th>
+<th class="border-top-0">2</th>
+<th class="border-top-0">3</th>
+<th class="border-top-0">4</th>
+<th class="border-top-0">5</th>
+<th class="border-top-0">6</th>
+<th class="border-top-0">7</th>
+<th class="border-top-0">8</th>
+<th class="border-top-0">9</th>
+<th class="border-top-0">10</th>
+<th class="border-top-0">11</th>
+<th class="border-top-0">12</th>
+<th class="border-top-0">13</th>
+<th class="border-top-0">14</th>
+<th class="border-top-0">15</th>
+ <th class="border-top-0">16</th>
+<th class="border-top-0">17</th>
+<th class="border-top-0">18</th>
+<th class="border-top-0">19</th>
+<th class="border-top-0">20</th>
+<th class="border-top-0">22</th>
+<th class="border-top-0">23</th>
+<th class="border-top-0">24</th>
+<th class="border-top-0">25</th>
+<th class="border-top-0">26</th>
+<th class="border-top-0">27</th>
+<th class="border-top-0">28</th>
+<th class="border-top-0">29</th>
+<th class="border-top-0">30</th>
+<th class="border-top-0">31</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>John Doe</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span class="text-danger">A</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span class="text-danger">A</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+</tr>
+<tr>
+<td>Tim Hank</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+ <td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+</tr>
+<tr>
+<td>Frank Camly</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span class="text-danger">A</span></td>
+<td><span class="text-danger">A</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+</tr>
+<tr>
+<td>Gary Camara</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+ <td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span class="text-danger">A</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+</tr>
+<tr>
+<td>Fidel Tonn</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span class="text-danger">A</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+</tr>
+<tr>
+<td>Tim Hank</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+</tr>
+<tr>
+<td>Maryam Amiri</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+</tr>
+<tr>
+<td>Hossein Shams</td>
+ <td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span class="text-danger">A</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span class="text-danger">A</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td><span>P</span></td>
+<td>.</td>
+<td>.</td>
+<td><span>P</span></td>
+</tr>
+</tbody>
+</table>
+          </div>
+          
+        </div>            
+      </div>
+    </div>
+    
 @endsection
