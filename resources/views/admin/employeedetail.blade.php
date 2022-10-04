@@ -148,7 +148,9 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-         <form>
+         <form action="{{ route('saveprofile' , $employee->id) }}" method="post" >
+            @csrf
+            @method('put')
             <div class="row">
                <div class="col-sm-12">
                   <div class="form-group">
@@ -159,7 +161,7 @@
                <div class="col-sm-6">
                   <div class="form-group">
                      <label>Name</label>
-                     <input class="form-control" value="John" type="text">
+                     <input name="firstname" value="{{ $employee->firstname }}" class="form-control" value="John" type="text">
                   </div>
                </div>
                <div class="col-sm-6">
@@ -171,38 +173,41 @@
                <div class="col-sm-6">
                   <div class="form-group">
                      <label>Joining Date</label>
-                     <input class="form-control datetimepicker" type="text">
+                     <input name="date_of_join" value="{{ date('m/d/Y',strtotime($employee->date_of_join)) }}" class="datepicker form-control datetimepicker" type="text">
                   </div>
                </div>              
                <div class="col-sm-6">
                   <div class="form-group">
                      <label>Email</label>
-                     <input class="form-control" value="johndoe@example.com" type="email">
+                     <input name="email" class="form-control" value="{{ $employee->email }}" type="email">
                   </div>
                </div>               
                <div class="col-sm-6">
                   <div class="form-group">
                      <label>Birth Date</label>
-                     <input class="form-control datetimepicker" type="text">
+                     <input name="birthdate" value="{{ date('m/d/Y',strtotime($employee->birthdate)) }}"  class="form-control datepicker"  type="text">
                   </div>
                </div>
-               
                <div class="col-sm-6">
                   <div class="form-group">
                      <label>Phone</label>
-                     <input class="form-control" value="9876543210" type="text">
+                     <input class="form-control" name="phone" value="{{ $employee->phone }}" type="text">
                   </div>
                </div>
                <div class="col-sm-6">
                   <div class="form-group">
                      <label>Address</label>
-                     <input type="text"  class="form-control">
+                     <input type="text" name="address" class="form-control" value="{{ $employee->address }}">
                   </div>
                </div>
                <div class="col-sm-6">
                   <div class="form-group">
                      <label>Gender</label>
-                     <input type="text"  class="form-control">
+                       <select class="form-control" name="gender">
+                           <option value="">Select Gender</option>
+                           <option value="Male" @if(isset($employee->gender)  &&  $employee->gender == "Male"){{ "selected" }} @endif >Male</option>
+                           <option value="Female" @if(isset($employee->gender)  &&  $employee->gender == "Female"){{ "selected" }} @endif>Female</option>
+                       </select>
                   </div>
                </div>
                <div class="col-md-6">
@@ -210,15 +215,21 @@
                      <label>Designation</label>
                      <select class="form-control">
                         <option>Select Designation</option>
-                        <option>Web Designer</option>
-                        <option>Web Developer</option>
-                        <option>Android Developer</option>
+                            <option value="">Select Position</option>
+                            <option @if(isset($employee->gender)  &&  $employee->gender == "ReactJS Developer"){{ "selected" }} @endif value="ReactJS Developer">ReactJS Developer</option>
+                            <option  @if(isset($employee->gender)  &&  $employee->gender == "WordPress Developer"){{ "selected" }} @endif  value="WordPress Developer">WordPress Developer</option>
+                            <option  @if(isset($employee->gender)  &&  $employee->gender == "PHP Developer"){{ "selected" }} @endif  value="PHP Developer">PHP Developer</option>
+                            <option  @if(isset($employee->gender)  &&  $employee->gender == "Laravel Developer"){{ "selected" }} @endif   value="Laravel Developer">Laravel Developer</option>
+                            <option  @if(isset($employee->gender)  &&  $employee->gender == "Web Developer"){{ "selected" }} @endif  value="Web Designer">Web Designer</option>
+                            <option  @if(isset($employee->gender)  &&  $employee->gender == "Shopify Developer"){{ "selected" }} @endif  value="Shopify Developer">Shopify Developer</option>
+                            <option  @if(isset($employee->gender)  &&  $employee->gender == "Fresher"){{ "selected" }} @endif  value="Fresher">Fresher</option>
+                            <option  @if(isset($employee->gender)  &&  $employee->gender == "Intern"){{ "selected" }} @endif  value="Intern">Intern</option>
                      </select>                     
                   </div>
                </div>
             </div>
             <div class="submit-section">
-               <button class="btn">Save</button>
+               <button type="submit" class="btn">Save</button>
             </div>
          </form>
       </div>
@@ -235,24 +246,26 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-         <form>
+        <form action="{{ route('saveprofile' , $employee->id) }}" method="post" >
+             @csrf
+            @method('put')
             <div class="row">
                <div class="col-sm-12">
                   <div class="form-group">
                      <label>Nationality</label>
-                     <input class="form-control" value="" type="text">
+                     <input name="nationality" class="form-control" value="{{ $employee->nationality }}" type="text">
                   </div>
                </div>
                <div class="col-sm-6">
                   <div class="form-group">
                      <label>Religion</label>
-                     <input class="form-control" value="John" type="text">
+                     <input name="religion" class="form-control" value="{{ $employee->religion }}" type="text">
                   </div>
                </div>
                <div class="col-sm-6">
                   <div class="form-group">
                      <label>Marital status</label>
-                     <input type="text" class="form-control">
+                     <input type="text" value="{{ $employee->marital_status }}" class="form-control" name="marital_status">
                   </div>
                </div>
                
@@ -275,24 +288,26 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-         <form>
+         <form action="{{ route('saveprofile' , $employee->id) }}" method="post" >
+                @csrf
+            @method('put')
             <div class="row">
                <div class="col-sm-12">
                   <div class="form-group">
                      <label>Name</label>
-                     <input class="form-control" value="" type="text">
+                     <input name="emergency_contact_name" class="form-control" value="{{ $employee->emergency_contact_name }}" type="text">
                   </div>
                </div>
                <div class="col-sm-6">
                   <div class="form-group">
                      <label>Relationship</label>
-                     <input class="form-control" value="John" type="text">
+                     <input name="emergency_contact_relationship" class="form-control" value="{{ $employee->emergency_contact_relationship }}" type="text">
                   </div>
                </div>
                <div class="col-sm-6">
                   <div class="form-group">
                      <label>Phone</label>
-                     <input type="text" class="form-control">
+                     <input name="emergency_contact_phone" value="{{ $employee->emergency_contact_phone }}" type="text" class="form-control">
                   </div>
                </div>
                
@@ -315,30 +330,32 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-         <form>
+         <form action="{{ route('saveprofile' , $employee->id) }}" method="post" >
+            @csrf
+            @method('put')
             <div class="row">
                <div class="col-sm-12">
                   <div class="form-group">
                      <label>Bank name</label>
-                     <input class="form-control" value="" type="text">
+                     <input class="form-control" name="bank_name" value="{{ $employee->bank_name }}" type="text">
                   </div>
                </div>
                <div class="col-sm-6">
                   <div class="form-group">
                      <label>Bank account No.</label>
-                     <input class="form-control" value="John" type="text">
+                     <input class="form-control" name="bank_account_no" value="{{ $employee->bank_account_no }}" type="text">
                   </div>
                </div>
                <div class="col-sm-6">
                   <div class="form-group">
                      <label>IFSC Code</label>
-                     <input type="text" class="form-control">
+                     <input type="text" name="IFSC_code" value="{{ $employee->IFSC_code }}" class="form-control">
                   </div>
                </div>
                <div class="col-sm-12">
                   <div class="form-group">
                      <label>PAN No</label>
-                     <input type="text" class="form-control">
+                     <input type="text" name="PAN_no" value="{{ $employee->PAN_no }}" class="form-control">
                   </div>
                </div>
             </div>
@@ -355,6 +372,21 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 <script>
+    $(".editprofile-empen").on('click',function(){
+         // $("#customerModal").modal('show');
+          var action = $(this).data('href');  
+          var name = $(this).data('name');  
+          var country = $(this).data('country');  
+          var skype = $(this).data('skype');  
+        $("#editclient").on('shown.bs.modal', function() { 
+          $('.modalform').attr('action',action);
+          $('.modalform input[name="name"]').val(name);
+          $('.modalform input[name="country"]').val(country);
+          $('.modalform input[name="skype_id"]').val(skype);
+        });
+    });
+
+
    var specialElementHandlers = {
   '#bypassme': function(element, renderer) {
     return true;

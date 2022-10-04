@@ -81,6 +81,13 @@ class AdminController extends Controller
            $attendance = Attendance::where('day', date('Y-m-d'))->get();  
         }
         $employees = User::all();
+
+        $attendancess = Attendance::select('day','present')
+        ->whereMonth('created_at', date('m'))
+        ->whereYear('created_at', date('Y'))->get();
+       /* echo "<pre>";
+        print_r($attendancess);
+        echo "</pre>";*/
         return view('admin.attendence', compact( 'attendance' ,'employees'));
     }
 }

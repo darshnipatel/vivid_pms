@@ -99,20 +99,20 @@ class EmployeeController extends Controller
         $employee = User::find($id);
 
         $employee->date_of_join = !empty($request->date_of_join) ? date('Y-m-d', strtotime($request->date_of_join)) : $employee->date_of_join ;
-        $employee->phone = $request->phone;
-        $employee->birthdate =  date('Y-m-d', strtotime($request->birthdate));
-        $employee->address = $request->address;
-        $employee->gender = $request->gender;
-        $employee->nationality = $request->nationality;
-        $employee->religion = $request->religion;
-        $employee->marital_status = $request->marital_status;
-        $employee->emergency_contact_name = $request->emergency_contact_name;
-        $employee->emergency_contact_relationship = $request->emergency_contact_relationship;
-        $employee->emergency_contact_phone = $request->emergency_contact_phone;
-        $employee->bank_name = $request->bank_name;
-        $employee->bank_account_no = $request->bank_account_no;
-        $employee->IFSC_code = $request->IFSC_code;
-        $employee->PAN_no = $request->PAN_no;
+        $employee->phone = !empty($request->phone) ? $request->phone : $employee->phone;
+        $employee->birthdate = !empty($request->birthdate) ? date('Y-m-d', strtotime($request->birthdate)) : $employee->birthdate;
+        $employee->address = !empty($request->address) ? $request->address : $employee->adddress;
+        $employee->gender = !empty($request->gender) ? $request->gender : $employee->gender;
+        $employee->nationality = !empty($request->nationality) ? $request->nationality : $employee->nationality;
+        $employee->religion = !empty($request->religion) ? $request->religion : $employee->religion;
+        $employee->marital_status =!empty($request->marital_status) ? $request->marital_status: $employee->marital_status;
+        $employee->emergency_contact_name = !empty($request->emergency_contact_name) ? $request->emergency_contact_name : $employee->emergency_contact_name;
+        $employee->emergency_contact_relationship = !empty($request->emergency_contact_relationship) ? $request->emergency_contact_relationship : $employee->emergency_contact_relationship;
+        $employee->emergency_contact_phone = !empty($request->emergency_contact_phone) ? $request->emergency_contact_phone : $employee->emergency_contact_phone;
+        $employee->bank_name = !empty($request->bank_name) ? $request->bank_name : $employee->bank_name;
+        $employee->bank_account_no = !empty($request->bank_account_no) ? $request->bank_account_no : $employee->bank_account_no ;
+        $employee->IFSC_code = !empty($request->IFSC_code) ? $request->IFSC_code : $employee->IFSC_code;
+        $employee->PAN_no = !empty($request->PAN_no) ? $request->PAN_no : $employee->PAN_no;
         if($request->hasFile('profile_image')){
             $filenameWithExt = $request->profile_image->getClientOriginalName();
             //Get just filename

@@ -46,7 +46,6 @@
                   </div>
                    <p><strong>Description:</strong> {{ $summary->details }}</p>
                  </li>
-
                  @endforeach
                </ul>
               @else
